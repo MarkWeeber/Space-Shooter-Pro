@@ -14,6 +14,12 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform _projectileRoot;
 
     private float _canFire = -1f;
+    private float _horizontalInput, _verticalInput, _maxX, _maxY, _minX, _minY;
+    private Vector3 _movementVector = Vector3.zero;
+    private Vector3 _currentPosition = Vector3.zero;
+    private Vector3 _spawnPosition = Vector3.zero;
+    private GameObject _projectile;
+    private Projectile _projectileComponent;
 
     private void Start()
     {
@@ -31,10 +37,10 @@ public class Player : MonoBehaviour
 
     private void ManageControls()
     {
-        var horizontalInput = Input.GetAxis(GlobalVariables.HORIZONTAL_AXIS);
-        var verticalInput = Input.GetAxis(GlobalVariables.VERTICAL_AXIS);
-        var movementVector = new Vector3(horizontalInput, verticalInput, 0f);
-        transform.Translate(movementVector * _speed * Time.deltaTime);
+        _horizontalInput = Input.GetAxis(GlobalVariables.HORIZONTAL_AXIS);
+        _verticalInput = Input.GetAxis(GlobalVariables.VERTICAL_AXIS);
+        _movementVector = new Vector3(_horizontalInput, _verticalInput, 0f);
+        transform.Translate(_movementVector * _speed * Time.deltaTime);
         if (Input.GetKeyDown(GlobalVariables.JUMP_KEYCODE) && Time.time > _canFire)
         {
             _canFire = Time.time + _fireRate;
@@ -44,14 +50,14 @@ public class Player : MonoBehaviour
 
     private void ManagePlayerBounds()
     {
-        var maxX = _startPosition.x + _bounds.x;
-        var maxY = _startPosition.y + _bounds.y;
-        var minX = _startPosition.x - _bounds.x;
-        var minY = _startPosition.y - _bounds.y;
-        var currentPosition = transform.position;
+        _maxX = _startPosition.x + _bounds.x;
+        _maxY = _startPosition.y + _bounds.y;
+        _minX = _startPosition.x - _bounds.x;
+        _minY = _startPosition.y - _bounds.y;
+        _currentPosition = transform.position;
         transform.position = new Vector3(
-            Mathf.Clamp(currentPosition.x, minX, maxX),
-            Mathf.Clamp(currentPosition.y, minY, maxY),
+            Mathf.Clamp(_currentPosition.x, _minX, _maxX),
+            Mathf.Clamp(_currentPosition.y, _minY, _maxY),
             transform.position.z);
     }
 
@@ -59,15 +65,15 @@ public class Player : MonoBehaviour
     {
         if (_projectilePrefab != null)
         {
-            var spawnPosition = transform.position + _shootingPortOffest;
-            var projectile = Instantiate(_projectilePrefab, spawnPosition, Quaternion.identity);
+            _spawnPosition = transform.position + _shootingPortOffest;
+            _projectile = Instantiate(_projectilePrefab, _spawnPosition, Quaternion.identity);
             if (_projectileRoot != null)
             {
-                projectile.transform.parent = _projectileRoot;
+                _projectile.transform.parent = _projectileRoot;
             }
-            if (projectile.TryGetComponent<Projectile>(out var projectileComponent))
+            if (_projectile.TryGetComponent<Projectile>(out _projectileComponent))
             {
-                projectileComponent.SetOff(_damage);
+                _projectileComponent.SetOff(_damage);
             }
         }
     }

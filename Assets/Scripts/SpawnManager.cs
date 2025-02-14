@@ -7,8 +7,15 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject _prefab;
     [SerializeField] private float _spawnRate = 0.5f;
 
+    private Vector3 _spawnPosition = Vector3.zero;
+
     private void Start()
     {
+        _spawnRange = new Vector3(
+                        Mathf.Abs(_spawnRange.x),
+                        Mathf.Abs(_spawnRange.y),
+                        Mathf.Abs(_spawnRange.z)
+                    );
         StartCoroutine(SpawnRoutine());
     }
 
@@ -23,17 +30,12 @@ public class SpawnManager : MonoBehaviour
 
     private void SpawnPrefab()
     {
-        var spawnRange = new Vector3(
-                        Mathf.Abs(_spawnRange.x),
-                        Mathf.Abs(_spawnRange.y),
-                        Mathf.Abs(_spawnRange.z)
-                    );
-        var spawnPosition = new Vector3(
-            Random.Range(-spawnRange.x, spawnRange.x),
-            Random.Range(-spawnRange.y, spawnRange.y),
-            Random.Range(-spawnRange.z, spawnRange.z)
+        _spawnPosition = new Vector3(
+            Random.Range(-_spawnRange.x, _spawnRange.x),
+            Random.Range(-_spawnRange.y, _spawnRange.y),
+            Random.Range(-_spawnRange.z, _spawnRange.z)
         );
-        spawnPosition += transform.position;
-        Instantiate(_prefab, spawnPosition, Quaternion.identity);
+        _spawnPosition += transform.position;
+        Instantiate(_prefab, _spawnPosition, Quaternion.identity);
     }
 }

@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     private Vector3 _currentPosition = Vector3.zero;
     private Vector3 _spawnPosition = Vector3.zero;
     private GameObject _projectile;
-    private Projectile _projectileComponent;
+    private DamageDealer _damageDealer;
 
     private void Start()
     {
@@ -71,9 +71,9 @@ public class Player : MonoBehaviour
             {
                 _projectile.transform.parent = _projectileRoot;
             }
-            if (_projectile.TryGetComponent<Projectile>(out _projectileComponent))
+            if (_projectile.TryGetComponent<DamageDealer>(out _damageDealer))
             {
-                _projectileComponent.SetOff(_damage);
+                _damageDealer.Damage = _damage;
             }
         }
     }

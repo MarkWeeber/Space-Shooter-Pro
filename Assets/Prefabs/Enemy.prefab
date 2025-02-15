@@ -63,7 +63,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 5
   _lifeTime: 10
-  _bounds: {x: 5, y: 10, z: 0}
+  _bounds: {x: 10, y: 10, z: 0}
   _travelDirection: 1
 --- !u!114 &2842096822960067898
 MonoBehaviour:

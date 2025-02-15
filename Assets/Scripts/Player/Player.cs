@@ -11,7 +11,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float _damage = 20f;
     [SerializeField] private Vector3 _shootingPortOffest = new Vector3(0, 0.8f, 0f);
     [SerializeField] private GameObject _projectilePrefab;
+    [SerializeField] private GameObject _specialProjectilePrefab;
     [SerializeField] private Transform _projectileRoot;
+    [SerializeField] private bool _specialProjectile;
 
     private float _canFire = -1f;
     private float _horizontalInput, _verticalInput, _maxX, _maxY, _minX, _minY;
@@ -20,6 +22,7 @@ public class Player : MonoBehaviour
     private Vector3 _spawnPosition = Vector3.zero;
     private GameObject _projectile;
     private DamageDealer _damageDealer;
+    
 
     private void Start()
     {
@@ -63,18 +66,27 @@ public class Player : MonoBehaviour
 
     private void Fire()
     {
-        if (_projectilePrefab != null)
+        if (_specialProjectile && _specialProjectilePrefab != null)
         {
-            _spawnPosition = transform.position + _shootingPortOffest;
-            _projectile = Instantiate(_projectilePrefab, _spawnPosition, Quaternion.identity);
-            if (_projectileRoot != null)
-            {
-                _projectile.transform.parent = _projectileRoot;
-            }
-            if (_projectile.TryGetComponent<DamageDealer>(out _damageDealer))
-            {
-                _damageDealer.Damage = _damage;
-            }
+            SendProjectile(_specialProjectilePrefab);
+        }
+        else if (_projectilePrefab != null)
+        {
+            SendProjectile(_projectilePrefab);
+        }
+    }
+
+    private void SendProjectile(GameObject prefab)
+    {
+        _spawnPosition = transform.position + _shootingPortOffest;
+        _projectile = Instantiate(prefab, _spawnPosition, Quaternion.identity);
+        if (_projectileRoot != null)
+        {
+            _projectile.transform.parent = _projectileRoot;
+        }
+        if (_projectile.TryGetComponent<DamageDealer>(out _damageDealer))
+        {
+            _damageDealer.Damage = _damage;
         }
     }
 }

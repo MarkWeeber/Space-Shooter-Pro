@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Threading.Tasks;
+using UnityEngine;
 
 public class Player : MonoBehaviour
 {
@@ -13,16 +16,22 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _projectilePrefab;
     [SerializeField] private GameObject _specialProjectilePrefab;
     [SerializeField] private Transform _projectileRoot;
-    [SerializeField] private bool _specialProjectile;
+    [Header("Player health")]
+    [SerializeField] private Health _health;
+    [SerializeField] private Transform _shieldingTransform;
 
+    
     private float _canFire = -1f;
     private float _horizontalInput, _verticalInput, _maxX, _maxY, _minX, _minY;
+    private float _speedBoostFactor = 1f;
     private Vector3 _movementVector = Vector3.zero;
     private Vector3 _currentPosition = Vector3.zero;
     private Vector3 _spawnPosition = Vector3.zero;
     private GameObject _projectile;
     private DamageDealer _damageDealer;
-    
+    private bool _tripleProjectileAbility;
+    private IEnumerator _trippleProjectileCoroutine, _speedCoroutine;
+
 
     private void Start()
     {
@@ -30,6 +39,20 @@ public class Player : MonoBehaviour
             _startPosition.x,
             _startPosition.y,
             transform.position.z);
+        _trippleProjectileCoroutine = CooldownTrippleProjectileAbilityRoutine(0);
+        _speedCoroutine = CooldownSpeedBoostRoutine(0);
+        if (_health != null)
+        {
+            _health.OnShieldDepleted += OnShieldDepleted;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (_health != null)
+        {
+            _health.OnShieldDepleted -= OnShieldDepleted;
+        }
     }
 
     private void Update()
@@ -38,12 +61,40 @@ public class Player : MonoBehaviour
         ManagePlayerBounds();
     }
 
+    public void EnableTrippleProjectile(float timeInSeconds)
+    {
+        _tripleProjectileAbility = true;
+        StopCoroutine(_trippleProjectileCoroutine);
+        _trippleProjectileCoroutine = CooldownTrippleProjectileAbilityRoutine(timeInSeconds);
+        StartCoroutine(_trippleProjectileCoroutine);
+    }
+
+    public void EnableSpeedBoost(float timeInSeconds, float speedBoostFactor)
+    {
+        _speedBoostFactor = speedBoostFactor;
+        StopCoroutine(_speedCoroutine);
+        _speedCoroutine = CooldownSpeedBoostRoutine(timeInSeconds);
+        StartCoroutine(_speedCoroutine);
+    }
+
+    public void EnableShield(float shieldValue)
+    {
+        if (_health != null)
+        {
+            _health.ShieldValue = shieldValue;
+            if (_shieldingTransform != null)
+            {
+                _shieldingTransform.gameObject.SetActive(true);
+            }
+        }
+    }
+
     private void ManageControls()
     {
         _horizontalInput = Input.GetAxis(GlobalVariables.HORIZONTAL_AXIS);
         _verticalInput = Input.GetAxis(GlobalVariables.VERTICAL_AXIS);
         _movementVector = new Vector3(_horizontalInput, _verticalInput, 0f);
-        transform.Translate(_movementVector * _speed * Time.deltaTime);
+        transform.Translate(_movementVector * _speed * _speedBoostFactor * Time.deltaTime);
         if (Input.GetKeyDown(GlobalVariables.JUMP_KEYCODE) && Time.time > _canFire)
         {
             _canFire = Time.time + _fireRate;
@@ -66,7 +117,7 @@ public class Player : MonoBehaviour
 
     private void Fire()
     {
-        if (_specialProjectile && _specialProjectilePrefab != null)
+        if (_tripleProjectileAbility && _specialProjectilePrefab != null)
         {
             SendProjectile(_specialProjectilePrefab);
         }
@@ -87,6 +138,27 @@ public class Player : MonoBehaviour
         if (_projectile.TryGetComponent<DamageDealer>(out _damageDealer))
         {
             _damageDealer.Damage = _damage;
+        }
+    }
+
+    IEnumerator CooldownTrippleProjectileAbilityRoutine(float time)
+    {
+        yield return new WaitForSeconds(time);
+        _tripleProjectileAbility = false;
+    }
+
+    IEnumerator CooldownSpeedBoostRoutine(float time)
+    {
+        yield return new WaitForSeconds(time);
+        _speedBoostFactor = 1f;
+    }
+
+    private void OnShieldDepleted()
+    {
+        if (_shieldingTransform != null)
+        {
+            Debug.Log("CHECK");
+            _shieldingTransform.gameObject.SetActive(false);
         }
     }
 }

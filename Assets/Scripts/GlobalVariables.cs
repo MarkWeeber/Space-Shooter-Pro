@@ -3,7 +3,7 @@ using UnityEngine;
 public class GlobalVariables
 {
     public const int MAIN_MENU_SCENE = 0;
-    public const int GAME_SCENE = 0;
+    public const int GAME_SCENE = 1;
     public const string HORIZONTAL_AXIS = "Horizontal";
     public const string VERTICAL_AXIS = "Vertical";
     public const KeyCode JUMP_KEYCODE = KeyCode.Space;

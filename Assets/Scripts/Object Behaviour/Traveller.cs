@@ -13,6 +13,7 @@ public class Traveller : MonoBehaviour
     }
     [SerializeField] private float _speed = 15f;
     [SerializeField] private float _lifeTime = 5f;
+    [SerializeField] private float _rotationSpeed = 0f;
     [SerializeField] private Vector3 _bounds = new Vector3(5f, 10f, 0f);
     [SerializeField] private TravelDirection _travelDirection = TravelDirection.Up;
 
@@ -20,13 +21,20 @@ public class Traveller : MonoBehaviour
 
     private void Start()
     {
-        Destroy(this.gameObject, _lifeTime);
         SetUpVectors();
+    }
+
+    private void OnEnable()
+    {
+        Destroy(this.gameObject, _lifeTime);
     }
 
     private void Update()
     {
-        ManageTravelling();
+        if (enabled)
+        {
+            ManageTravelling(Time.deltaTime);
+        }
         ManageOutOfBounds();
     }
 
@@ -57,9 +65,13 @@ public class Traveller : MonoBehaviour
         }
     }
 
-    private void ManageTravelling()
+    private void ManageTravelling(float deltaTime)
     {
-        transform.Translate(_direction * _speed * Time.deltaTime);
+        transform.Translate(_direction * _speed * deltaTime);
+        if (_rotationSpeed > 0f)
+        {
+            transform.Rotate(Vector3.forward * _rotationSpeed * deltaTime);
+        }
     }
 
     private void ManageOutOfBounds()

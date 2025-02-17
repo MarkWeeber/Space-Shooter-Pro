@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -20,9 +19,12 @@ public class SpawnManager : MonoBehaviour
     private Vector3 _spawnPosition = Vector3.zero;
     private float[] _spawnTimers;
     private int _spawnCount;
+    private bool _enabled;
 
     private void Start()
     {
+        _enabled = true;
+        UIManager.Instance.OnGameOver.AddListener(OnGameOver);
         if (_spawnObjects.Length > 0)
         {
             _spawnTimers = new float[_spawnObjects.Length];
@@ -36,7 +38,7 @@ public class SpawnManager : MonoBehaviour
 
     private void Update()
     {
-        if (_spawnObjects.Length > 0)
+        if (_spawnObjects.Length > 0 && _enabled)
         {
             CirculateSpawnObjects(Time.deltaTime);
         }
@@ -73,7 +75,12 @@ public class SpawnManager : MonoBehaviour
                 Random.Range(-_spawnRange.z, _spawnRange.z)
             );
             _spawnPosition += transform.position;
-            Instantiate(prefab, _spawnPosition, Quaternion.identity);
+            Instantiate(prefab, _spawnPosition, Quaternion.identity, this.transform);
         }
+    }
+
+    private void OnGameOver()
+    {
+        _enabled = false;
     }
 }

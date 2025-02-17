@@ -17,10 +17,9 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _specialProjectilePrefab;
     [SerializeField] private Transform _projectileRoot;
     [Header("Player health")]
-    [SerializeField] private Health _health;
+    [SerializeField] private PlayerHealth _playerHealth;
     [SerializeField] private Transform _shieldingTransform;
 
-    
     private float _canFire = -1f;
     private float _horizontalInput, _verticalInput, _maxX, _maxY, _minX, _minY;
     private float _speedBoostFactor = 1f;
@@ -41,17 +40,17 @@ public class Player : MonoBehaviour
             transform.position.z);
         _trippleProjectileCoroutine = CooldownTrippleProjectileAbilityRoutine(0);
         _speedCoroutine = CooldownSpeedBoostRoutine(0);
-        if (_health != null)
+        if (_playerHealth != null)
         {
-            _health.OnShieldDepleted += OnShieldDepleted;
+            _playerHealth.OnShieldDepleted += OnShieldDepleted;
         }
     }
 
     private void OnDestroy()
     {
-        if (_health != null)
+        if (_playerHealth != null)
         {
-            _health.OnShieldDepleted -= OnShieldDepleted;
+            _playerHealth.OnShieldDepleted -= OnShieldDepleted;
         }
     }
 
@@ -79,9 +78,9 @@ public class Player : MonoBehaviour
 
     public void EnableShield(float shieldValue)
     {
-        if (_health != null)
+        if (_playerHealth != null)
         {
-            _health.ShieldValue = shieldValue;
+            _playerHealth.ShieldValue = shieldValue;
             if (_shieldingTransform != null)
             {
                 _shieldingTransform.gameObject.SetActive(true);
@@ -157,7 +156,6 @@ public class Player : MonoBehaviour
     {
         if (_shieldingTransform != null)
         {
-            Debug.Log("CHECK");
             _shieldingTransform.gameObject.SetActive(false);
         }
     }

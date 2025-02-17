@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7717589308955097531}
-  - component: {fileID: -5486414137338594167}
   - component: {fileID: 12646113915871678}
   - component: {fileID: 2842096822960067898}
   - component: {fileID: 625674405944258869}
   - component: {fileID: 7891538684305567353}
   - component: {fileID: 5325485369727506393}
+  - component: {fileID: 52451171244729117}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -36,19 +36,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-5486414137338594167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 317294542391734023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 615b712fba4a3174dba58d7b0f75710a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: 20
 --- !u!114 &12646113915871678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,3 +163,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &52451171244729117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317294542391734023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c41492c4a0db0a4bb8ce29f7907bef1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startingHealth: 20
+  _scoreValue: 10

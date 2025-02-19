@@ -20,6 +20,10 @@ public class GameManager : SingletonBehaviour<GameManager>
                 RestartCurrentScene();
             }
         }
+        if (Input.GetKeyDown(GlobalVariables.ESCAPE_KEYCODE))
+        {
+            Application.Quit();
+        }
     }
 
     public void GoToMainMenu()
@@ -37,7 +41,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void OnGameOver()
+    public void SetGameOver()
     {
         _gameIsOver = true;
     }

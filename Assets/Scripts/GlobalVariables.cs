@@ -8,6 +8,7 @@ public class GlobalVariables
     public const string VERTICAL_AXIS = "Vertical";
     public const KeyCode JUMP_KEYCODE = KeyCode.Space;
     public const KeyCode RESTART_KEYCODE = KeyCode.R;
+    public const KeyCode ESCAPE_KEYCODE = KeyCode.Escape;
     public const string PLAYER_TAG = "Player";
     public const string ENEMY_TAG = "Enemy";
     public const string OUT_OF_BOUNDS_TAG = "OutOfBounds";

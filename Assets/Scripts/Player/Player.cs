@@ -19,7 +19,6 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform _shieldingTransform;
     [SerializeField] private Transform[] _damageEffects;
 
-    private float _canFire = -1f;
     private float _horizontalInput, _verticalInput, _maxX, _maxY, _minX, _minY;
     private float _speedBoostFactor = 1f, _damagedRatio, _damageEffectsIndexRatio;
     private Vector3 _movementVector = Vector3.zero;
@@ -29,20 +28,12 @@ public class Player : MonoBehaviour
     private DamageDealer _damageDealer;
     private bool _tripleProjectileAbility;
     private IEnumerator _trippleProjectileCoroutine, _speedCoroutine;
+    private SimpleRateLimiter fireRateLimiter;
+
 
     private void Start()
     {
-        transform.position = new Vector3(
-            _startPosition.x,
-            _startPosition.y,
-            transform.position.z);
-        _trippleProjectileCoroutine = CooldownTrippleProjectileAbilityRoutine(0);
-        _speedCoroutine = CooldownSpeedBoostRoutine(0);
-        if (_playerHealth != null)
-        {
-            _playerHealth.OnShieldDepleted += OnShieldDepleted;
-            _playerHealth.OnDamageTaken += OnDamageTaken;
-        }
+        Initialize();
     }
 
     private void OnDestroy()
@@ -58,6 +49,22 @@ public class Player : MonoBehaviour
     {
         ManageControls();
         ManagePlayerBounds();
+    }
+
+    private void Initialize()
+    {
+        fireRateLimiter.DropTime = Time.time + _fireRate;
+        transform.position = new Vector3(
+            _startPosition.x,
+            _startPosition.y,
+            transform.position.z);
+        _trippleProjectileCoroutine = CooldownTrippleProjectileAbilityRoutine(0);
+        _speedCoroutine = CooldownSpeedBoostRoutine(0);
+        if (_playerHealth != null)
+        {
+            _playerHealth.OnShieldDepleted += OnShieldDepleted;
+            _playerHealth.OnDamageTaken += OnDamageTaken;
+        }
     }
 
     public void EnableTrippleProjectile(float timeInSeconds)
@@ -94,9 +101,8 @@ public class Player : MonoBehaviour
         _verticalInput = Input.GetAxis(GlobalVariables.VERTICAL_AXIS);
         _movementVector = new Vector3(_horizontalInput, _verticalInput, 0f);
         transform.Translate(_movementVector * _speed * _speedBoostFactor * Time.deltaTime);
-        if (Input.GetKeyDown(GlobalVariables.JUMP_KEYCODE) && Time.time > _canFire)
+        if (Input.GetKeyDown(GlobalVariables.JUMP_KEYCODE) && fireRateLimiter.IsReady(Time.time, _fireRate))
         {
-            _canFire = Time.time + _fireRate;
             Fire();
         }
     }

@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 public class PlayerHealth : Health
 {
@@ -21,6 +20,6 @@ public class PlayerHealth : Health
     protected override void KilledEvent()
     {
         UIManager.Instance.SetGameOver();
-        GameManager.Instance.OnGameOver();
+        GameManager.Instance.SetGameOver();
     }
 }

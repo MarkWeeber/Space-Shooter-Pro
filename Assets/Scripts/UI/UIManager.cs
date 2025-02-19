@@ -16,13 +16,6 @@ public class UIManager : SingletonBehaviour<UIManager>
     private float _healthBarFillRatio;
     private int _scoreValue;
     
-
-    protected override void Awake()
-    {
-        dontDestroyOnload = false;
-        base.Awake();
-    }
-
     private void Start()
     {
         _scoreValueText.text = _scoreValue.ToString();

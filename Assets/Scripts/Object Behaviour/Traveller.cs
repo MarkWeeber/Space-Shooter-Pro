@@ -70,7 +70,10 @@ public class Traveller : MonoBehaviour
 
     private void ManageTravelling(float deltaTime)
     {
-        transform.Translate(_direction * _speed * deltaTime);
+        if (_speed > 0)
+        {
+            transform.Translate(_direction * _speed * deltaTime);
+        }
         if (_rotationSpeed > 0f)
         {
             transform.Rotate(Vector3.forward * _rotationSpeed * deltaTime);

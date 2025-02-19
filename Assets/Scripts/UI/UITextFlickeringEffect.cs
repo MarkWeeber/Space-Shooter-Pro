@@ -24,6 +24,11 @@ public class UITextFlickeringEffect : MonoBehaviour
 
     private void Update()
     {
+        Flicker(Time.deltaTime);
+    }
+
+    private void Flicker(float deltaTime)
+    {
         if (_enabled)
         {
             if (_timer > 0f)

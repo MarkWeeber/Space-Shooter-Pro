@@ -1,5 +1,4 @@
-﻿using UnityEditor.Purchasing;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonBehaviour<GameManager>

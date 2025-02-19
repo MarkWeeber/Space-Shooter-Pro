@@ -14,6 +14,7 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] private Vector3 _spawnRange = new Vector3(5f, 0f, 0f);
     [SerializeField] private SpawningObject[] _spawnObjects;
+    [SerializeField] private float _startDelay = 4f;
 
     private SpawningObject _spawningObject;
     private Vector3 _spawnPosition = Vector3.zero;
@@ -22,6 +23,19 @@ public class SpawnManager : MonoBehaviour
     private bool _enabled;
 
     private void Start()
+    {
+        Invoke(nameof(Initialize), _startDelay);
+    }
+
+    private void Update()
+    {
+        if (_spawnObjects.Length > 0 && _enabled)
+        {
+            CirculateSpawnObjects(Time.deltaTime);
+        }
+    }
+
+    private void Initialize()
     {
         _enabled = true;
         UIManager.Instance.OnGameOver.AddListener(OnGameOver);
@@ -34,14 +48,6 @@ public class SpawnManager : MonoBehaviour
                         Mathf.Abs(_spawnRange.y),
                         Mathf.Abs(_spawnRange.z)
                     );
-    }
-
-    private void Update()
-    {
-        if (_spawnObjects.Length > 0 && _enabled)
-        {
-            CirculateSpawnObjects(Time.deltaTime);
-        }
     }
 
     private void CirculateSpawnObjects(float deltaTime)

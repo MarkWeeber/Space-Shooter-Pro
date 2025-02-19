@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyHealth : Health
 {
@@ -7,10 +8,24 @@ public class EnemyHealth : Health
     protected override void KilledEvent()
     {
         UIManager.Instance.AddScore(_scoreValue);
+        PlayExplosionSound();
+        LeaveDestroyedObjectAfterKilled();
+    }
+
+    public void LeaveDestroyedObjectAfterKilled()
+    {
         if (_objectOnDestroy != null)
         {
             _objectOnDestroy.gameObject.SetActive(true);
             _objectOnDestroy.parent = null;
+        }
+    }
+
+    private void PlayExplosionSound()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayExplosion(transform.position);
         }
     }
 }

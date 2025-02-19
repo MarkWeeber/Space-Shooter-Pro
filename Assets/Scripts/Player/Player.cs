@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Threading.Tasks;
+﻿using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -19,10 +17,11 @@ public class Player : MonoBehaviour
     [Header("Player health")]
     [SerializeField] private PlayerHealth _playerHealth;
     [SerializeField] private Transform _shieldingTransform;
+    [SerializeField] private Transform[] _damageEffects;
 
     private float _canFire = -1f;
     private float _horizontalInput, _verticalInput, _maxX, _maxY, _minX, _minY;
-    private float _speedBoostFactor = 1f;
+    private float _speedBoostFactor = 1f, _damagedRatio, _damageEffectsIndexRatio;
     private Vector3 _movementVector = Vector3.zero;
     private Vector3 _currentPosition = Vector3.zero;
     private Vector3 _spawnPosition = Vector3.zero;
@@ -30,7 +29,6 @@ public class Player : MonoBehaviour
     private DamageDealer _damageDealer;
     private bool _tripleProjectileAbility;
     private IEnumerator _trippleProjectileCoroutine, _speedCoroutine;
-
 
     private void Start()
     {
@@ -43,6 +41,7 @@ public class Player : MonoBehaviour
         if (_playerHealth != null)
         {
             _playerHealth.OnShieldDepleted += OnShieldDepleted;
+            _playerHealth.OnDamageTaken += OnDamageTaken;
         }
     }
 
@@ -51,6 +50,7 @@ public class Player : MonoBehaviour
         if (_playerHealth != null)
         {
             _playerHealth.OnShieldDepleted -= OnShieldDepleted;
+            _playerHealth.OnDamageTaken -= OnDamageTaken;
         }
     }
 
@@ -158,5 +158,26 @@ public class Player : MonoBehaviour
         {
             _shieldingTransform.gameObject.SetActive(false);
         }
+    }
+
+    private void OnDamageTaken(float startingHealth, float currentHealth)
+    {
+        if (_damageEffects != null)
+        {
+            _damagedRatio = 1f - currentHealth / startingHealth;
+            for (int i = 0; i < _damageEffects.Length; i++)
+            {
+                _damageEffectsIndexRatio = (i + 1) / (float)_damageEffects.Length;
+                if (_damageEffectsIndexRatio < _damagedRatio)
+                {
+                    _damageEffects[i].gameObject.SetActive(true);
+                }
+                else
+                {
+                    _damageEffects[i].gameObject.SetActive(false);
+                }
+            }
+        }
+
     }
 }

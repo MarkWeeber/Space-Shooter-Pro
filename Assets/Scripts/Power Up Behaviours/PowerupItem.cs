@@ -9,13 +9,22 @@ public abstract class PowerupItem : MonoBehaviour
         {
             if (collision.TryGetComponent<Player>(out player))
             {
+                PlayPickUpSound();
                 OnPicked();
+                Destroy(this.gameObject);
             }
         }
     }
 
     protected virtual void OnPicked()
     {
-        Destroy(this.gameObject);
+    }
+
+    private void PlayPickUpSound()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayPowerUpPickup(transform.position);
+        }
     }
 }

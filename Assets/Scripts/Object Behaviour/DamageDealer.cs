@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class DamageDealer : MonoBehaviour
+public abstract class DamageDealer : MonoBehaviour
 {
-    [SerializeField] private float _damage = 25f;
+    [SerializeField] protected float _damage = 25f;
     [SerializeField] private string _targetTag = "";
 
     public float Damage { get => _damage; set => _damage = value; }
@@ -14,8 +14,14 @@ public class DamageDealer : MonoBehaviour
             if (other.gameObject.TryGetComponent<Health>(out var healthComponent))
             {
                 healthComponent.TakeDamage(_damage);
+                OnDamageDealt();
                 Destroy(this.gameObject);
             }
         }
+    }
+
+    protected virtual void OnDamageDealt()
+    {
+
     }
 }

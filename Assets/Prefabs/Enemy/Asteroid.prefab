@@ -114,9 +114,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79c74c82afacfcb4aa8a7af804f45fb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
+  _speed: 0
   _lifeTime: 5
-  _rotationSpeed: 5
+  _rotationSpeed: 0
   _bounds: {x: 10, y: 10, z: 0}
   _travelDirection: 0
 --- !u!1 &1599912664613194665
@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 1599912664613194664}
   - component: {fileID: 5561831455223914732}
   - component: {fileID: 5817643927156090737}
-  - component: {fileID: 938184698481298950}
+  - component: {fileID: 9183926795639663476}
   m_Layer: 0
   m_Name: Asteroid
   m_TagString: Enemy
@@ -255,8 +255,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79c74c82afacfcb4aa8a7af804f45fb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
-  _lifeTime: 5
+  _speed: 0
+  _lifeTime: 0
   _rotationSpeed: 5
   _bounds: {x: 10, y: 10, z: 0}
   _travelDirection: 1
@@ -275,7 +275,7 @@ MonoBehaviour:
   _startingHealth: 10
   _scoreValue: 0
   _objectOnDestroy: {fileID: 1599912662924511915}
---- !u!114 &938184698481298950
+--- !u!114 &9183926795639663476
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -284,8 +284,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1599912664613194665}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aae78b2ce23d06140a3b4c3cbb02acdd, type: 3}
+  m_Script: {fileID: 11500000, guid: 38819369d90b3c5458fd4768a7914f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 5
-  _targetTag: Player
+  _onDestroyEvent:
+    m_PersistentCalls:
+      m_Calls: []

@@ -26,7 +26,10 @@ public class Traveller : MonoBehaviour
 
     private void OnEnable()
     {
-        Destroy(this.gameObject, _lifeTime);
+        if (_lifeTime > 0)
+        {
+            Destroy(this.gameObject, _lifeTime);
+        }
     }
 
     private void Update()

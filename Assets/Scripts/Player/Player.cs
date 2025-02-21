@@ -19,9 +19,9 @@ public class Player : MonoBehaviour
     }
     [SerializeField] private float _fireRate = 0.2f;
     [SerializeField] private float _damage = 20f;
-    [SerializeField] private Vector3 _shootingPortOffest = new Vector3(0, 0.8f, 0f);
+    [SerializeField] private Transform[] _firePorts = new Transform[0];
     [SerializeField] private GameObject _projectilePrefab;
-    [SerializeField] private GameObject _specialProjectilePrefab;
+    [SerializeField] private GameObject _powerfullProjectile;
     [SerializeField] private Transform _projectileRoot;
     [Header("Player health")]
     [SerializeField] private PlayerHealth _playerHealth;
@@ -35,16 +35,42 @@ public class Player : MonoBehaviour
     private Vector3 _spawnPosition = Vector3.zero;
     private GameObject _projectile;
     private DamageDealer _damageDealer;
-    private bool _tripleProjectileAbility;
-    private IEnumerator _trippleProjectileCoroutine, _speedCoroutine;
+    private IEnumerator _trippleProjectileCoroutine, _speedCoroutine, _powerfullProjectileCoroutine;
     private SimpleRateLimiter _fireRateLimiter;
     private SimpleRateLimiter _sprintReteLimiter;
     private Material _shieldMaterial;
-    private bool _sprintReady, _fireAllowed;
+    private bool _sprintReady, _fireAllowed, _powerfulProjectileAllowed;
 
     private void Start()
     {
         Initialize();
+    }
+
+    private void Initialize()
+    {
+        _sprintAmmount = _sprintMaxDuration;
+        _sprintReteLimiter.DropTime = Time.time;
+        _fireRateLimiter.DropTime = Time.time;
+        transform.position = new Vector3(
+            _startPosition.x,
+            _startPosition.y,
+            transform.position.z);
+        _trippleProjectileCoroutine = CooldownTrippleProjectileAbilityRoutine(0);
+        _speedCoroutine = CooldownSpeedBoostRoutine(0);
+        _powerfullProjectileCoroutine = PowerfullProjectileRoutine(0);
+        if (_playerHealth != null)
+        {
+            _playerHealth.OnShieldDepleted += OnShieldDepleted;
+            _playerHealth.OnDamageTaken += OnDamageTaken;
+            _playerHealth.ShieldDamaged += OnShieldDamaged;
+        }
+        if (_firePorts.Length > 2)
+        {
+            _firePorts[1].gameObject.SetActive(false);
+            _firePorts[2].gameObject.SetActive(false);
+        }
+        _shieldMaterial = _shieldingTransform.GetComponent<Renderer>().material;
+        UpdateAmmo();
     }
 
     private void OnDestroy()
@@ -63,30 +89,21 @@ public class Player : MonoBehaviour
         ManagePlayerBounds();
     }
 
-    private void Initialize()
+    public void EnablePowerfullProjectile(float timeInSeconds)
     {
-        _sprintAmmount = _sprintMaxDuration;
-        _sprintReteLimiter.DropTime = Time.time;
-        _fireRateLimiter.DropTime = Time.time;
-        transform.position = new Vector3(
-            _startPosition.x,
-            _startPosition.y,
-            transform.position.z);
-        _trippleProjectileCoroutine = CooldownTrippleProjectileAbilityRoutine(0);
-        _speedCoroutine = CooldownSpeedBoostRoutine(0);
-        if (_playerHealth != null)
-        {
-            _playerHealth.OnShieldDepleted += OnShieldDepleted;
-            _playerHealth.OnDamageTaken += OnDamageTaken;
-            _playerHealth.ShieldDamaged += OnShieldDamaged;
-        }
-        _shieldMaterial = _shieldingTransform.GetComponent<Renderer>().material;
-        UpdateAmmo();
+        _powerfulProjectileAllowed = true;
+        StopCoroutine(_powerfullProjectileCoroutine);
+        _powerfullProjectileCoroutine = PowerfullProjectileRoutine(timeInSeconds);
+        StartCoroutine(_powerfullProjectileCoroutine);
     }
 
     public void EnableTrippleProjectile(float timeInSeconds)
     {
-        _tripleProjectileAbility = true;
+        if (_firePorts.Length > 2)
+        {
+            _firePorts[1].gameObject.SetActive(true);
+            _firePorts[2].gameObject.SetActive(true);
+        }
         StopCoroutine(_trippleProjectileCoroutine);
         _trippleProjectileCoroutine = CooldownTrippleProjectileAbilityRoutine(timeInSeconds);
         StartCoroutine(_trippleProjectileCoroutine);
@@ -190,9 +207,9 @@ public class Player : MonoBehaviour
     {
         if (_ammouCount > 0)
         {
-            if (_tripleProjectileAbility && _specialProjectilePrefab != null)
+            if (_powerfulProjectileAllowed && _powerfullProjectile != null)
             {
-                SendProjectile(_specialProjectilePrefab);
+                
             }
             else if (_projectilePrefab != null)
             {
@@ -213,28 +230,45 @@ public class Player : MonoBehaviour
 
     private void SendProjectile(GameObject prefab)
     {
-        _spawnPosition = transform.position + _shootingPortOffest;
-        _projectile = Instantiate(prefab, _spawnPosition, Quaternion.identity);
-        if (_projectileRoot != null)
+        foreach (var firePort in _firePorts)
         {
-            _projectile.transform.parent = _projectileRoot;
-        }
-        if (_projectile.TryGetComponent<DamageDealer>(out _damageDealer))
-        {
-            _damageDealer.Damage = _damage;
+            if (firePort.gameObject.activeSelf)
+            {
+                _spawnPosition = firePort.position;
+                _projectile = Instantiate(prefab, _spawnPosition, Quaternion.identity);
+                if (_projectileRoot != null)
+                {
+                    _projectile.transform.parent = _projectileRoot;
+                }
+                if (_projectile.TryGetComponent<DamageDealer>(out _damageDealer))
+                {
+                    _damageDealer.Damage = _damage;
+                }
+
+            }
         }
     }
 
     IEnumerator CooldownTrippleProjectileAbilityRoutine(float time)
     {
         yield return new WaitForSeconds(time);
-        _tripleProjectileAbility = false;
+        if (_firePorts.Length > 2)
+        {
+            _firePorts[1].gameObject.SetActive(false);
+            _firePorts[2].gameObject.SetActive(false);
+        }
     }
 
     IEnumerator CooldownSpeedBoostRoutine(float time)
     {
         yield return new WaitForSeconds(time);
         _speedBoostFactor = 1f;
+    }
+
+    IEnumerator PowerfullProjectileRoutine(float time)
+    {
+        yield return new WaitForSeconds(time);
+        _powerfulProjectileAllowed = false;
     }
 
     private void OnShieldDepleted()

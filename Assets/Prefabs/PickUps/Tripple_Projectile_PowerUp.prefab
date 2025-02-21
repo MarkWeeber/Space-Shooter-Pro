@@ -156,6 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 5
   _lifeTime: 5
+  _rotationSpeed: 0
   _bounds: {x: 10, y: 10, z: 0}
   _travelDirection: 1
 --- !u!114 &5517168481054136692
@@ -170,5 +171,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0af84cba0eaa16469ce89f80f313ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetTag: Player
-  _timeInMilliseconds: 1000
+  _timeInSeconds: 10

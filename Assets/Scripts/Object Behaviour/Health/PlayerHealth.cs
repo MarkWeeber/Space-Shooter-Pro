@@ -3,7 +3,7 @@ using System;
 public class PlayerHealth : Health
 {
     public float StartingHealth { get => _startingHealth; }
-    public float CurrentHealth { get => _currentHealth; set { _currentHealth = value; HealthChangedEvent(); } }
+    public float CurrentHealth { get => _currentHealth; set { _currentHealth = value; HealthChanged(); } }
     public float ShieldValue { get => _shieldValue; set => _shieldValue = value; }
     public Action OnShieldDepleted;
     public Action<float, float> OnDamageTaken;
@@ -14,10 +14,15 @@ public class PlayerHealth : Health
         OnShieldDepleted?.Invoke();
     }
 
-    protected override void HealthChangedEvent()
+    protected override void DamageTakenEvent()
     {
         UIManager.Instance.UpdateHealth(_startingHealth, _currentHealth);
         OnDamageTaken?.Invoke(_startingHealth, _currentHealth);
+    }
+
+    private void HealthChanged()
+    {
+        UIManager.Instance.UpdateHealth(_startingHealth, _currentHealth);
     }
 
     protected override void KilledEvent()

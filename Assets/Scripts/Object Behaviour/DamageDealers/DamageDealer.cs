@@ -3,7 +3,7 @@
 public abstract class DamageDealer : MonoBehaviour
 {
     [SerializeField] protected float _damage = 25f;
-    [SerializeField] private string _targetTag = "";
+    [SerializeField] protected string _targetTag = "";
 
     public float Damage { get => _damage; set => _damage = value; }
 

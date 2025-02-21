@@ -33,7 +33,7 @@ public abstract class Health : MonoBehaviour
         if (_shieldValue <= 0f)
         {
             _currentHealth = Mathf.Clamp(_currentHealth - _damageToHealth, 0f, _startingHealth);
-            HealthChangedEvent();
+            DamageTakenEvent();
             if (_currentHealth <= 0)
             {
                 KilledEvent();
@@ -46,7 +46,7 @@ public abstract class Health : MonoBehaviour
     {
     }
 
-    protected virtual void HealthChangedEvent()
+    protected virtual void DamageTakenEvent()
     {
     }
 

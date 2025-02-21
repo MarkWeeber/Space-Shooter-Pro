@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class UITextFlickeringEffect : MonoBehaviour
@@ -7,14 +8,13 @@ public class UITextFlickeringEffect : MonoBehaviour
     [SerializeField] private float _flickerRate = 0.5f;
     private bool _enabled, _hide;
     private string _storedText;
-    private float _timer;
 
     private void OnEnable()
     {
         _enabled = true;
         _storedText = _text.text;
         _hide = false;
-        _timer = _flickerRate;
+        StartCoroutine(Flicker());
     }
 
     private void OnDisable()
@@ -22,32 +22,20 @@ public class UITextFlickeringEffect : MonoBehaviour
         _enabled = false;
     }
 
-    private void Update()
+    IEnumerator Flicker()
     {
-        Flicker(Time.deltaTime);
-    }
-
-    private void Flicker(float deltaTime)
-    {
-        if (_enabled)
+        while (_enabled)
         {
-            if (_timer > 0f)
+            yield return new WaitForSeconds(_flickerRate);
+            if (_hide)
             {
-                _timer -= Time.deltaTime;
+                _text.text = "";
             }
             else
             {
-                _timer = _flickerRate;
-                if (_hide)
-                {
-                    _text.text = "";
-                }
-                else
-                {
-                    _text.text = _storedText;
-                }
-                _hide = !_hide;
+                _text.text = _storedText;
             }
+            _hide = !_hide;
         }
     }
 }

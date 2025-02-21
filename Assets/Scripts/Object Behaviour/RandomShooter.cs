@@ -24,7 +24,7 @@ public class RandomShooter : MonoBehaviour
 
     private void ManageRandomShooting()
     {
-        if (fireRateLimiter.IsReady(Time.time, _fireRate))
+        if (fireRateLimiter.IsReady(Time.time))
         {
             _chance = Random.Range(0f, 1f);
             if (_chance <= _fireProbability)
@@ -32,6 +32,7 @@ public class RandomShooter : MonoBehaviour
                 Fire();
             }
         }
+        fireRateLimiter.SetNewRate(Time.time, _fireRate);
     }
 
     private void Fire()

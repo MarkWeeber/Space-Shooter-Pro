@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,18 +8,26 @@ using UnityEngine.UI;
 public class UIManager : SingletonBehaviour<UIManager>
 {
     [SerializeField] private TMP_Text _scoreValueText;
+    [SerializeField] private TMP_Text _ammoValueText;
     [SerializeField] private Image _healthBarHorizontalFillImage;
     [SerializeField] private Color _fullHealthBarColor = Color.green;
     [SerializeField] private Color _emptyHealthBarColor = Color.red;
     [SerializeField] private Image[] _healthBarImages;
+    [SerializeField] private Color _sprintBarCooldownColor = Color.yellow;
+    [SerializeField] private Image _sprintBarFillImage;
+    [SerializeField] private Image _sprintBarImage;
     public UnityEvent OnGameOver;
+    private IEnumerator _sprintBarCoolDownRoutine;
     private Color _healthBarColor;
-    private float _healthBarFillRatio;
+    private Color _sprintBarFullColor;
+    private float _healthBarFillRatio, _sprintBarFillRatio;
     private int _scoreValue;
-    
+
     private void Start()
     {
         _scoreValueText.text = _scoreValue.ToString();
+        _sprintBarFullColor = _sprintBarImage.color;
+        _sprintBarCoolDownRoutine = SprintBarCooldownRoutine(0, 1);
     }
 
     public void UpdateHealth(float startingHealth, float currentHealth)
@@ -38,15 +47,54 @@ public class UIManager : SingletonBehaviour<UIManager>
         }
     }
 
+    public void SetSprintBarFillAmout(float fillAmount)
+    {
+        _sprintBarFillRatio = fillAmount;
+        _sprintBarFillImage.fillAmount = _sprintBarFillRatio;
+    }
+
+    public void CooldownSprintBar(float timeInSeconds)
+    {
+        _sprintBarFillRatio = 0f;
+        _sprintBarFillImage.fillAmount = _sprintBarFillRatio;
+        _sprintBarImage.color = _sprintBarCooldownColor;
+        StopCoroutine(_sprintBarCoolDownRoutine);
+        _sprintBarCoolDownRoutine = SprintBarCooldownRoutine(timeInSeconds, 16);
+        StartCoroutine(_sprintBarCoolDownRoutine);
+    }
+
     public void AddScore(int score)
     {
         _scoreValue += score;
         _scoreValueText.text = _scoreValue.ToString();
     }
 
+    public void SetAmmo(int ammoCount)
+    {
+        _ammoValueText.text = ammoCount.ToString();
+    }
+
     public void SetGameOver()
     {
         OnGameOver?.Invoke();
+    }
+
+    IEnumerator SprintBarCooldownRoutine(float timeInSeconds, int steps)
+    {
+        if (steps <= 0)
+        {
+            yield return null;
+        }
+        int currentStep = 0;
+        while (currentStep < steps)
+        {
+            _sprintBarFillRatio = (float)currentStep / steps;
+            _sprintBarFillImage.fillAmount = _sprintBarFillRatio;
+            yield return new WaitForSeconds(timeInSeconds / steps);
+            currentStep++;
+        }
+        _sprintBarFillImage.fillAmount = 1f;
+        _sprintBarImage.color = _sprintBarFullColor;
     }
 
 }

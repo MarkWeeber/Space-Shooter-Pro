@@ -19,7 +19,7 @@ public class UIManager : SingletonBehaviour<UIManager>
     [SerializeField] private float _cameraShakeDuration = 0.4f;
 
     public UnityEvent OnGameOver;
-    private IEnumerator _sprintBarCoolDownRoutine;
+    private IEnumerator _sprintBarCoolDownRoutine, _cameraShakeRoutine;
     private Color _healthBarColor;
     private Color _sprintBarFullColor;
     private float _healthBarFillRatio, _sprintBarFillRatio;
@@ -31,6 +31,7 @@ public class UIManager : SingletonBehaviour<UIManager>
         _scoreValueText.text = _scoreValue.ToString();
         _sprintBarFullColor = _sprintBarImage.color;
         _sprintBarCoolDownRoutine = SprintBarCooldownRoutine(0, 1);
+        _cameraShakeRoutine = CamerShakeRoutine(0, 1);
         _cameraOriginalPosition = Camera.main.transform.position;
     }
 
@@ -76,6 +77,12 @@ public class UIManager : SingletonBehaviour<UIManager>
     public void SetAmmo(int ammoCount)
     {
         _ammoValueText.text = ammoCount.ToString();
+    }
+
+    public void ShakeCamera()
+    {
+        StopCoroutine(_cameraShakeRoutine);
+        _cameraShakeRoutine = CamerShakeRoutine(_cameraShakeDuration, 9);
     }
 
     public void SetGameOver()

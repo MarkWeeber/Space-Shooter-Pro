@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 4620893074355668502}
   - component: {fileID: 1100150999573338758}
   - component: {fileID: 4162526797560518202}
-  - component: {fileID: 5028605575587807391}
-  - component: {fileID: -2850750290574053236}
+  - component: {fileID: 3139454182099443778}
+  - component: {fileID: 8432648820508473684}
   m_Layer: 0
   m_Name: Speed_PowerUp
   m_TagString: Untagged
@@ -142,7 +142,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2
---- !u!114 &5028605575587807391
+--- !u!114 &3139454182099443778
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,7 +159,7 @@ MonoBehaviour:
   _rotationSpeed: 0
   _bounds: {x: 10, y: 10, z: 0}
   _travelDirection: 1
---- !u!114 &-2850750290574053236
+--- !u!114 &8432648820508473684
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6076262048531361815}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57fb7409eb6199046b830d912114ad3c, type: 3}
+  m_Script: {fileID: 11500000, guid: e8649306102f396439097ddb7661c04c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _boostDuration: 5

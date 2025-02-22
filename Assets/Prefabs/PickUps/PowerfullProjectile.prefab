@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 5653041705660985217}
   - component: {fileID: 5653041705660985218}
   - component: {fileID: 5653041705660985216}
-  - component: {fileID: 5653041705660985247}
+  - component: {fileID: 1919455826536905822}
   m_Layer: 0
   m_Name: PowerfullProjectile
   m_TagString: Untagged
@@ -272,7 +272,7 @@ MonoBehaviour:
   _rotationSpeed: 0
   _bounds: {x: 10, y: 10, z: 0}
   _travelDirection: 1
---- !u!114 &5653041705660985247
+--- !u!114 &1919455826536905822
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -281,7 +281,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5653041705660985220}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 355a01c1d2db8df479296c75fbb5afb9, type: 3}
+  m_Script: {fileID: 11500000, guid: effcc1e464a52d24299ec8f25f52368e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _duration: 5

@@ -11,11 +11,12 @@ GameObject:
   - component: {fileID: 7717589308955097531}
   - component: {fileID: 7891538684305567353}
   - component: {fileID: 625674405944258869}
-  - component: {fileID: 12646113915871678}
-  - component: {fileID: 52451171244729117}
   - component: {fileID: 5325485369727506393}
-  - component: {fileID: 7544578239966896912}
+  - component: {fileID: 5483918262874971272}
+  - component: {fileID: 2255066140804853278}
+  - component: {fileID: 3500364798478984614}
   - component: {fileID: 3401623712261239448}
+  - component: {fileID: 2935252004767299386}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -85,38 +86,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &12646113915871678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 317294542391734023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79c74c82afacfcb4aa8a7af804f45fb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 4
-  _lifeTime: 10
-  _rotationSpeed: 0
-  _bounds: {x: 10, y: 10, z: 0}
-  _travelDirection: 1
---- !u!114 &52451171244729117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 317294542391734023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c41492c4a0db0a4bb8ce29f7907bef1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _startingHealth: 20
-  _scoreValue: 10
-  _objectOnDestroy: {fileID: 1186457042348935571}
 --- !u!212 &5325485369727506393
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -167,7 +136,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7544578239966896912
+--- !u!114 &5483918262874971272
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,12 +145,45 @@ MonoBehaviour:
   m_GameObject: {fileID: 317294542391734023}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 288393063666c90489246aa72450bf40, type: 3}
+  m_Script: {fileID: 11500000, guid: 79c74c82afacfcb4aa8a7af804f45fb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 4
+  _lifeTime: 10
+  _rotationSpeed: 0
+  _bounds: {x: 10, y: 10, z: 0}
+  _travelDirection: 1
+--- !u!114 &2255066140804853278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317294542391734023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01c392fe2de6e1547ad2438f52276e55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startHealth: 20
+  _currentHealth: 20
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &3500364798478984614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317294542391734023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7ecedd2a3b0d7e45b4d754f8d54748a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 25
   _targetTag: Player
-  _enemyHealth: {fileID: 52451171244729117}
 --- !u!114 &3401623712261239448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,6 +201,34 @@ MonoBehaviour:
   _shootingPortOffest: {x: 0, y: -0.5, z: 0}
   _fireRate: 1
   _fireProbability: 0.2
+--- !u!114 &2935252004767299386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317294542391734023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5ae385e92e9de1428ac691fb2e828d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scoreValue: 10
+  _hitDamageValue: 15
+  _shootDamageValue: 10
+  _enemyHealth: {fileID: 2255066140804853278}
+  _bodyDamageDealer: {fileID: 3500364798478984614}
+  _destroyedBody: {fileID: 1186457042348935571}
+  _randomShooter: 1
+  _projectilePrefab: {fileID: 5332485038301655060, guid: e53b38accd662cd4dac7d4fb55381e32,
+    type: 3}
+  _shootingPortOffest: {x: 0, y: -0.5, z: 0}
+  _fireRate: 1
+  _fireProbability: 0.25
+  _withProtectiveShield: 0
+  _shieldStartValue: 25
+  _protectiveShield: {fileID: 0}
+  _dodger: 0
 --- !u!1 &1186457042348935572
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,7 +240,7 @@ GameObject:
   - component: {fileID: 1186457042348935571}
   - component: {fileID: 1186457042348935570}
   - component: {fileID: 1186457042348935573}
-  - component: {fileID: 759218097124602572}
+  - component: {fileID: 5665883628579534761}
   m_Layer: 0
   m_Name: Enemy_Destroyed
   m_TagString: Untagged
@@ -301,7 +331,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &759218097124602572
+--- !u!114 &5665883628579534761
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

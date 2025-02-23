@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 5483918262874971272}
   - component: {fileID: 2255066140804853278}
   - component: {fileID: 3500364798478984614}
-  - component: {fileID: 3401623712261239448}
   - component: {fileID: 2935252004767299386}
   m_Layer: 0
   m_Name: Enemy
@@ -148,11 +147,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79c74c82afacfcb4aa8a7af804f45fb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 4
+  _speed: 3
   _lifeTime: 10
   _rotationSpeed: 0
-  _bounds: {x: 10, y: 10, z: 0}
+  _bounds: {x: 10, y: 15, z: 0}
   _travelDirection: 1
+  _enableComplexMovement: 0
+  _xCurveAdjustment:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 4
+      outSlope: 4
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.25
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.75
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -4
+      outSlope: -4
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _xCurveRatio: 2
 --- !u!114 &2255066140804853278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,23 +236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 25
   _targetTag: Player
---- !u!114 &3401623712261239448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 317294542391734023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f705acf9ff82908448c1e106df6cd3bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _projectilePrefab: {fileID: 5332485038301655060, guid: e53b38accd662cd4dac7d4fb55381e32,
-    type: 3}
-  _shootingPortOffest: {x: 0, y: -0.5, z: 0}
-  _fireRate: 1
-  _fireProbability: 0.2
+  _remainsAfterDestroy: {fileID: 0}
 --- !u!114 &2935252004767299386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,3 +384,11 @@ MonoBehaviour:
   _rotationSpeed: 0
   _bounds: {x: 10, y: 10, z: 0}
   _travelDirection: 1
+  _enableComplexMovement: 0
+  _xCurveAdjustment:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _xCurveRatio: 2

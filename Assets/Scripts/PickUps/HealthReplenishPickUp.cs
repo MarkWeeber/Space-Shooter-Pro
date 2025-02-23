@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace SpaceShooterPro
 {
-    public class AmmoPickUp : MonoBehaviour, ICollectable
+    public class HealthReplenishPickUp : MonoBehaviour, ICollectable
     {
-        [SerializeField] private int _ammo = 15;
-        private Player _player;
+        [SerializeField] private float _healthReplenishAmount = 15f;
+        private Health _health;
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.tag == GlobalVariables.PLAYER_TAG)
@@ -17,9 +17,9 @@ namespace SpaceShooterPro
 
         public void Collect(GameObject collector)
         {
-            if (collector.TryGetComponent<Player>(out _player))
+            if (collector.TryGetComponent<Health>(out _health))
             {
-                _player.AmmoCount += _ammo;
+                _health.Heal(_healthReplenishAmount);
             }
         }
     }

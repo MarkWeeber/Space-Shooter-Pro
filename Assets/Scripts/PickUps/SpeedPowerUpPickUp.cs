@@ -1,10 +1,13 @@
+
+using SpaceShooterPro;
 using UnityEngine;
 
 namespace SpaceShooterPro
 {
-    public class AmmoPickUp : MonoBehaviour, ICollectable
+    public class SpeedPowerUpPickUp : MonoBehaviour, ICollectable
     {
-        [SerializeField] private int _ammo = 15;
+        [SerializeField] private float _boostDuration = 5f;
+        [SerializeField] private float _boostFactor = 1.5f;
         private Player _player;
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -19,7 +22,7 @@ namespace SpaceShooterPro
         {
             if (collector.TryGetComponent<Player>(out _player))
             {
-                _player.AmmoCount += _ammo;
+                _player.EnableSpeedBoost(_boostDuration, _boostFactor);
             }
         }
     }

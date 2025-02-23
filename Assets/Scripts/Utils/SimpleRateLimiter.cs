@@ -1,30 +1,32 @@
-using UnityEngine;
 
-public struct SimpleRateLimiter
+namespace SpaceShooterPro
 {
-    public float DropTime;
-    private float _timeToDrop;
-    private bool _ready;
-    public bool IsReady(float time)
+    public struct SimpleRateLimiter
     {
-        _ready = false;
-        _timeToDrop = DropTime - time;
-        if (_timeToDrop <= 0f)
+        public float DropTime;
+        private float _timeToDrop;
+        private bool _ready;
+        public bool IsReady(float time)
         {
-            _ready = true;
-            return true;
+            _ready = false;
+            _timeToDrop = DropTime - time;
+            if (_timeToDrop <= 0f)
+            {
+                _ready = true;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-        else
-        {
-            return false;
-        }
-    }
 
-    public void SetNewRate(float time, float newRate)
-    {
-        if (_ready)
+        public void SetNewRate(float time, float newRate)
         {
-            DropTime = time + newRate;
+            if (_ready)
+            {
+                DropTime = time + newRate;
+            }
         }
     }
 }

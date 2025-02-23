@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace SpaceShooterPro
 {
-    public class AmmoPickUp : MonoBehaviour, ICollectable
+    public class TrippleProjectilePowerUpPickUp : MonoBehaviour, ICollectable
     {
-        [SerializeField] private int _ammo = 15;
+        [SerializeField] private float _duration = 5f;
         private Player _player;
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -19,8 +19,9 @@ namespace SpaceShooterPro
         {
             if (collector.TryGetComponent<Player>(out _player))
             {
-                _player.AmmoCount += _ammo;
+                _player.EnableTrippleProjectile(_duration);
             }
         }
     }
 }
+

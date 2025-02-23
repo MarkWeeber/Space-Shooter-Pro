@@ -139,7 +139,7 @@ MonoBehaviour:
   _speed: 0
   _lifeTime: 0
   _rotationSpeed: 5
-  _bounds: {x: 10, y: 10, z: 0}
+  _bounds: {x: 10, y: 15, z: 0}
   _travelDirection: 1
 --- !u!114 &3900740175273658735
 MonoBehaviour:

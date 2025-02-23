@@ -492,7 +492,8 @@ MonoBehaviour:
   - {fileID: 6840905520397496671}
   _projectilePrefab: {fileID: 5332485038301655060, guid: af62f5d469b0e6046b1a22a5bfbe49ad,
     type: 3}
-  _powerfullProjectile: {fileID: 0}
+  _powerfullProjectile: {fileID: 1947409605973168717, guid: 3c2caf2bf1f2f594f99cc5ee6e57c5d7,
+    type: 3}
   _projectileRoot: {fileID: 0}
   _health: {fileID: 4078359851823558765}
   _protectiveShield: {fileID: 2066489254837278775}

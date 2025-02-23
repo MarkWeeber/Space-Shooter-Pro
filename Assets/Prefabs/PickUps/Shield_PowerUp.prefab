@@ -154,10 +154,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79c74c82afacfcb4aa8a7af804f45fb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5
-  _lifeTime: 5
+  _speed: 2
+  _lifeTime: 10
   _rotationSpeed: 0
-  _bounds: {x: 10, y: 10, z: 0}
+  _bounds: {x: 10, y: 15, z: 0}
   _travelDirection: 1
 --- !u!114 &5096661474599038375
 MonoBehaviour:

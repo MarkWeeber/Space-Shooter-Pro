@@ -1,23 +1,26 @@
 using UnityEngine;
 
-public class SingletonBehaviour<T> : MonoBehaviour where T : SingletonBehaviour<T>
+namespace SpaceShooterPro
 {
-    public static T Instance { get; protected set; }
-    protected bool dontDestroyOnload;
-
-    protected virtual void Awake()
+    public class SingletonBehaviour<T> : MonoBehaviour where T : SingletonBehaviour<T>
     {
-        if (Instance != null && Instance != this)
+        public static T Instance { get; protected set; }
+        protected bool dontDestroyOnload;
+
+        protected virtual void Awake()
         {
-            Destroy(this);
-            return;
-        }
-        else
-        {
-            Instance = (T)this;
-            if (dontDestroyOnload)
+            if (Instance != null && Instance != this)
             {
-                DontDestroyOnLoad(gameObject);
+                Destroy(this);
+                return;
+            }
+            else
+            {
+                Instance = (T)this;
+                if (dontDestroyOnload)
+                {
+                    DontDestroyOnLoad(gameObject);
+                }
             }
         }
     }

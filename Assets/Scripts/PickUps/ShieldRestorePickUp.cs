@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace SpaceShooterPro
 {
-    public class AmmoPickUp : MonoBehaviour, ICollectable
+    public class ShieldRestorePickUp : MonoBehaviour, ICollectable
     {
-        [SerializeField] private int _ammo = 15;
-        private Player _player;
+        [SerializeField] private float _shieldRestoreValue = 25;
+        private ProtectiveShield _shield;
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.tag == GlobalVariables.PLAYER_TAG)
@@ -17,9 +17,9 @@ namespace SpaceShooterPro
 
         public void Collect(GameObject collector)
         {
-            if (collector.TryGetComponent<Player>(out _player))
+            if (collector.TryGetComponent<ProtectiveShield>(out _shield))
             {
-                _player.AmmoCount += _ammo;
+                _shield.RestoreShield(_shieldRestoreValue);
             }
         }
     }

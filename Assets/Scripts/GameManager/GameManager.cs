@@ -1,47 +1,50 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : SingletonBehaviour<GameManager>
+namespace SpaceShooterPro
 {
-    private bool _gameIsOver;
-    protected override void Awake()
+    public class GameManager : SingletonBehaviour<GameManager>
     {
-        dontDestroyOnload = true;
-        base.Awake();
-    }
-
-    private void Update()
-    {
-        if (_gameIsOver)
+        private bool _gameIsOver;
+        protected override void Awake()
         {
-            if (Input.GetKeyDown(GlobalVariables.RESTART_KEYCODE))
+            dontDestroyOnload = true;
+            base.Awake();
+        }
+
+        private void Update()
+        {
+            if (_gameIsOver)
             {
-                RestartCurrentScene();
+                if (Input.GetKeyDown(GlobalVariables.RESTART_KEYCODE))
+                {
+                    RestartCurrentScene();
+                }
+            }
+            if (Input.GetKeyDown(GlobalVariables.ESCAPE_KEYCODE))
+            {
+                Application.Quit();
             }
         }
-        if (Input.GetKeyDown(GlobalVariables.ESCAPE_KEYCODE))
+
+        public void GoToMainMenu()
         {
-            Application.Quit();
+            SceneManager.LoadScene(GlobalVariables.MAIN_MENU_SCENE);
         }
-    }
 
-    public void GoToMainMenu()
-    {
-        SceneManager.LoadScene(GlobalVariables.MAIN_MENU_SCENE);
-    }
+        public void OpenGameScene()
+        {
+            SceneManager.LoadScene(GlobalVariables.GAME_SCENE);
+        }
 
-    public void OpenGameScene()
-    {
-        SceneManager.LoadScene(GlobalVariables.GAME_SCENE);
-    }
+        public void RestartCurrentScene()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
 
-    public void RestartCurrentScene()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public void SetGameOver()
-    {
-        _gameIsOver = true;
+        public void SetGameOver()
+        {
+            _gameIsOver = true;
+        }
     }
 }

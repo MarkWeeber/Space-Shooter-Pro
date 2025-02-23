@@ -85,7 +85,6 @@ GameObject:
   - component: {fileID: 6425168199113047577}
   - component: {fileID: 8521204641989127230}
   - component: {fileID: 2030958871364317239}
-  - component: {fileID: 3675976678004820043}
   m_Layer: 0
   m_Name: Projectile (1)
   m_TagString: Untagged
@@ -204,20 +203,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3675976678004820043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5028809245185560606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44005f8fa0858f04bb06163c26c945a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _damage: 25
-  _targetTag: Enemy
 --- !u!1 &5033089096240834491
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,7 +215,6 @@ GameObject:
   - component: {fileID: 6429518419051874748}
   - component: {fileID: 8525757167834504091}
   - component: {fileID: 2035520197602232210}
-  - component: {fileID: 4088268497933299609}
   m_Layer: 0
   m_Name: Projectile (2)
   m_TagString: Untagged
@@ -349,20 +333,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4088268497933299609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5033089096240834491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44005f8fa0858f04bb06163c26c945a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _damage: 25
-  _targetTag: Enemy
 --- !u!1 &6011777413419216448
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,7 +345,6 @@ GameObject:
   - component: {fileID: 5732304449480228935}
   - component: {fileID: 6982429421433393760}
   - component: {fileID: 759031070538911337}
-  - component: {fileID: 2223431479490318447}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -494,17 +463,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2223431479490318447
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6011777413419216448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44005f8fa0858f04bb06163c26c945a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _damage: 25
-  _targetTag: Enemy

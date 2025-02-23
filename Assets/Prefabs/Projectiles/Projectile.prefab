@@ -147,7 +147,7 @@ MonoBehaviour:
   _speed: 15
   _lifeTime: 5
   _rotationSpeed: 0
-  _bounds: {x: 10, y: 10, z: 0}
+  _bounds: {x: 10, y: 15, z: 0}
   _travelDirection: 0
 --- !u!114 &1479936444492055381
 MonoBehaviour:
@@ -163,3 +163,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 25
   _targetTag: Enemy
+  _remainsAfterDestroy: {fileID: 0}

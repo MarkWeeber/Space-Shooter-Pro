@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1628,6 +1628,12 @@ MonoBehaviour:
       type: 3}
     MinSpawnRate: 15
     MaxSpawnRate: 30
+    MinSpawnCount: 0
+    MaxSpawnCount: 1
+  - Prefab: {fileID: 8742318005591097696, guid: a4a67b90fec7c264cbdd8fcfc1591575,
+      type: 3}
+    MinSpawnRate: 5
+    MaxSpawnRate: 5
     MinSpawnCount: 0
     MaxSpawnCount: 1
   _enemyWavesSpawn:

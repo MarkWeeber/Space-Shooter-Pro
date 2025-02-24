@@ -11,6 +11,7 @@ namespace SpaceShooterPro
             if (collision.tag == GlobalVariables.PLAYER_TAG)
             {
                 Collect(collision.gameObject);
+                AudioManager.Instance.PlayPowerUpPickup(transform.position);
                 Destroy(this.gameObject);
             }
         }

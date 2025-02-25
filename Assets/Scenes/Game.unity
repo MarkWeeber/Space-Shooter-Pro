@@ -1579,7 +1579,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1001492220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1643,7 +1643,7 @@ MonoBehaviour:
       MinSpawnRate: 1
       MaxSpawnRate: 3
       MinSpawnCount: 1
-      MaxSpawnCount: 1
+      MaxSpawnCount: 2
     SpawnAnnounceText: WAVE 1 STARTED
     SpawnPreTime: 5
     NormalSpawnDuration: 30
@@ -1657,8 +1657,14 @@ MonoBehaviour:
         type: 3}
       MinSpawnRate: 1
       MaxSpawnRate: 3
-      MinSpawnCount: 1
-      MaxSpawnCount: 1
+      MinSpawnCount: 0
+      MaxSpawnCount: 2
+    - Prefab: {fileID: 7059735182260858562, guid: 6f2596fbed892cc449237e209502c096,
+        type: 3}
+      MinSpawnRate: 1
+      MaxSpawnRate: 3
+      MinSpawnCount: 0
+      MaxSpawnCount: 2
     SpawnAnnounceText: WAVE 2 STARTED
     SpawnPreTime: 5
     NormalSpawnDuration: 30
@@ -1667,7 +1673,34 @@ MonoBehaviour:
     RestingDuration: 10
     OutBreakStartWarning: HUGE WAVE INCOMING
     SpawnFinishText: WAVE 2 COMPLETED
-  _startDelay: 0
+  - EnemiesSpawnSetup:
+    - Prefab: {fileID: 7059735182260858562, guid: 6f2596fbed892cc449237e209502c096,
+        type: 3}
+      MinSpawnRate: 1
+      MaxSpawnRate: 3
+      MinSpawnCount: 0
+      MaxSpawnCount: 2
+    - Prefab: {fileID: 7059735182260858562, guid: 6f2596fbed892cc449237e209502c096,
+        type: 3}
+      MinSpawnRate: 1
+      MaxSpawnRate: 3
+      MinSpawnCount: 0
+      MaxSpawnCount: 2
+    - Prefab: {fileID: 3364256665951625403, guid: c8199655601d55f46913f17b5227c7f4,
+        type: 3}
+      MinSpawnRate: 1
+      MaxSpawnRate: 3
+      MinSpawnCount: 0
+      MaxSpawnCount: 2
+    SpawnAnnounceText: WAVE 3 STARTED
+    SpawnPreTime: 5
+    NormalSpawnDuration: 30
+    OutbreakSpawnDuration: 15
+    OutbreakSpawnRateMultiplier: 3
+    RestingDuration: 10
+    OutBreakStartWarning: HUGE WAVE INCOMING
+    SpawnFinishText: WAVE 3 COMPLETED
+  _startDelay: 3
 --- !u!4 &1001492221
 Transform:
   m_ObjectHideFlags: 0
@@ -3644,6 +3677,11 @@ PrefabInstance:
       propertyPath: _projectileRoot
       value: 
       objectReference: {fileID: 716618562}
+    - target: {fileID: 790444118162796824, guid: d8572b1a1ff51784381590374b79e36d,
+        type: 3}
+      propertyPath: _protectiveShield
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8572b1a1ff51784381590374b79e36d, type: 3}
 --- !u!1001 &7170849533919424726
@@ -3921,7 +3959,7 @@ PrefabInstance:
     - target: {fileID: 8482514228198475491, guid: c0feb05584b1deb4ab766414285e594f,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8482514228198475495, guid: c0feb05584b1deb4ab766414285e594f,
         type: 3}

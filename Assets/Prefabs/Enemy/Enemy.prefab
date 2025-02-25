@@ -147,6 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79c74c82afacfcb4aa8a7af804f45fb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _turnSelfUpTowardsDirection: 0
   _speed: 3
   _lifeTime: 10
   _rotationSpeed: 0
@@ -204,7 +205,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _xCurveRatio: 2
+  _xCurveAmplitudeMultiplier: 2
+  _xCurveTimeMultiplier: 0.5
 --- !u!114 &2255066140804853278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,7 +264,8 @@ MonoBehaviour:
   _fireRate: 1
   _fireProbability: 0.25
   _withProtectiveShield: 0
-  _shieldStartValue: 25
+  _maxShieldValue: 50
+  _shieldCurrenttValue: 25
   _protectiveShield: {fileID: 0}
   _dodger: 0
 --- !u!1 &1186457042348935572
@@ -379,6 +382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79c74c82afacfcb4aa8a7af804f45fb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _turnSelfUpTowardsDirection: 0
   _speed: 0
   _lifeTime: 5
   _rotationSpeed: 0
@@ -391,4 +395,5 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _xCurveRatio: 2
+  _xCurveAmplitudeMultiplier: 2
+  _xCurveTimeMultiplier: 0.5

@@ -26,6 +26,12 @@ namespace SpaceShooterPro
             CheckShieldValue();
         }
 
+        public void SetShieldValue(float shieldValue)
+        {
+            _shieldValue = Mathf.Clamp(shieldValue, 0f, _maxShieldValue);
+            CheckShieldValue();
+        }
+
         public void TakeDamage(float damageValue)
         {
             _shieldValue = Mathf.Clamp(_shieldValue - damageValue, 0f, _maxShieldValue);
@@ -50,6 +56,10 @@ namespace SpaceShooterPro
 
         private void UpdateTransparencyOfMaterial()
         {
+            if (_shieldMaterial == null) // for unknown reason materials cannot be acquired once game starts
+            {
+                return;
+            }
             _shieldMaterial.color = new Color(
                     _shieldMaterial.color.r,
                     _shieldMaterial.color.g,

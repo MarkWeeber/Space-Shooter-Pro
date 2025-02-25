@@ -20,7 +20,8 @@ namespace SpaceShooterPro
         [SerializeField] private float _fireProbability = 0.25f;
         [Header("With protective Shield")]
         [SerializeField] private bool _withProtectiveShield;
-        [SerializeField] private float _shieldStartValue = 25f;
+        [SerializeField] private float _maxShieldValue = 50f;
+        [SerializeField] private float _shieldCurrenttValue = 25f;
         [SerializeField] private ProtectiveShield _protectiveShield;
         [Header("Dodger")]
         [SerializeField] private bool _dodger;
@@ -32,7 +33,7 @@ namespace SpaceShooterPro
         private float _chance;
         #endregion
 
-        private void Start()
+        private void Awake()
         {
             AssignToEvents();
             Initialize();
@@ -78,8 +79,8 @@ namespace SpaceShooterPro
         private void InitializeWithShield()
         {
             _enemyHealth.ProtectiveShield = _protectiveShield;
-            _protectiveShield.MaxShieldVale = _shieldStartValue;
-            _protectiveShield.RestoreShield(_shieldStartValue);
+            _protectiveShield.MaxShieldVale = _maxShieldValue;
+            _protectiveShield.SetShieldValue(_shieldCurrenttValue);
         }
 
         #endregion

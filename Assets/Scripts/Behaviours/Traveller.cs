@@ -14,6 +14,7 @@ namespace SpaceShooterPro
             Right = 3
         }
 
+        [SerializeField] private bool _turnSelfUpTowardsDirection = false;
         [SerializeField] private float _speed = 5f;
         [SerializeField] private float _lifeTime = 5f;
         [SerializeField] private float _rotationSpeed = 0f;
@@ -57,23 +58,32 @@ namespace SpaceShooterPro
                     Mathf.Abs(_bounds.y),
                     Mathf.Abs(_bounds.z)
                     );
+            var relativeUpDirection = Vector3.zero;
             switch (_travelDirection)
             {
                 case TravelSpaceDirection.Up:
                     _intialDirection = Vector2.up;
+                    relativeUpDirection = Vector3.up;
                     break;
                 case TravelSpaceDirection.Down:
                     _intialDirection = Vector2.down;
+                    relativeUpDirection = Vector3.down;
                     break;
                 case TravelSpaceDirection.Left:
                     _intialDirection = Vector2.left;
+                    relativeUpDirection = Vector3.left;
                     break;
                 case TravelSpaceDirection.Right:
                     _intialDirection = Vector2.right;
+                    relativeUpDirection = Vector3.right;
                     break;
                 default:
                     _intialDirection = Vector2.up;
                     break;
+            }
+            if (_turnSelfUpTowardsDirection)
+            {
+                transform.up = relativeUpDirection;
             }
             if (_enableComplexMovement)
             {
@@ -86,7 +96,7 @@ namespace SpaceShooterPro
             if (_enableComplexMovement)
             {
                 _adjustedDirection = new Vector3(
-                        _intialDirection.x + _xCurveAdjustment.Evaluate(((Time.time + _randomValue) * _xCurveTimeMultiplier) % 1) * _xCurveAmplitudeMultiplier,
+                        _intialDirection.x + _xCurveAdjustment.Evaluate((Time.time + _randomValue) * _xCurveTimeMultiplier % 1) * _xCurveAmplitudeMultiplier,
                         _intialDirection.y,
                         _intialDirection.z
                     );
@@ -97,7 +107,7 @@ namespace SpaceShooterPro
             }
             if (_speed > 0)
             {
-                transform.Translate(_adjustedDirection * _speed * deltaTime);
+                transform.Translate(_adjustedDirection * _speed * deltaTime, Space.World);
             }
             if (_rotationSpeed > 0f)
             {

@@ -22,5 +22,10 @@ namespace SpaceShooterPro
                 }
             }
         }
+
+        public void Reengage()
+        {
+            _collider2D.enabled = true;
+        }
     }
 }

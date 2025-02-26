@@ -12,7 +12,7 @@ namespace SpaceShooterPro
         private Transform _targetTransform;
         private Vector3 _directionToTarget;
         private RaycastHit2D[] _raycastHits2D;
-        private Traveller.TravelSpaceDirection _originalTravelDirection;
+        private Traveller.TravelWorldSpaceDirection _originalTravelDirection;
 
         private void Start()
         {
@@ -45,6 +45,7 @@ namespace SpaceShooterPro
             if (_targetTransform == null) // if somehow target is missing
             {
                 ResetTraveller();
+                ResetTriggerCaller();
                 return;
             }
             _directionToTarget = _targetTransform.position - transform.position;
@@ -69,21 +70,26 @@ namespace SpaceShooterPro
             _traveller.enabled = true;
             switch (_originalTravelDirection)
             {
-                case Traveller.TravelSpaceDirection.Up:
+                case Traveller.TravelWorldSpaceDirection.Up_Forward:
                     transform.up = Vector2.up;
                     break;
-                case Traveller.TravelSpaceDirection.Down:
+                case Traveller.TravelWorldSpaceDirection.Down_Backward:
                     transform.up = Vector2.down;
                     break;
-                case Traveller.TravelSpaceDirection.Left:
+                case Traveller.TravelWorldSpaceDirection.Left:
                     transform.up = Vector2.left;
                     break;
-                case Traveller.TravelSpaceDirection.Right:
+                case Traveller.TravelWorldSpaceDirection.Right:
                     transform.up = Vector2.right;
                     break;
                 default: break;
             }
             _traveller.TravelDirection = _originalTravelDirection;
+        }
+
+        private void ResetTriggerCaller()
+        {
+            _triggerCaller2D.Reengage();
         }
     }
 }

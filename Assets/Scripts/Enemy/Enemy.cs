@@ -50,7 +50,7 @@ namespace SpaceShooterPro
         private SimpleRateLimiter _fireRateLimiter, _backFireRateLimiter, _pickUpDestroyFireRateLimiter;
         private float _chance;
         private IEnumerator _dodgeroutine;
-        private Traveller.TravelSpaceDirection _travelSpaceDirection;
+        private Traveller.TravelWorldSpaceDirection _travelSpaceDirection;
         private float _initialTravelerSpeed;
         #endregion
 
@@ -265,11 +265,11 @@ namespace SpaceShooterPro
         {
             if (Random.Range(0f, 1f) < 0.5f)
             {
-                _traveller.TravelDirection = Traveller.TravelSpaceDirection.Left;
+                _traveller.TravelDirection = Traveller.TravelWorldSpaceDirection.Left;
             }
             else
             {
-                _traveller.TravelDirection = Traveller.TravelSpaceDirection.Right;
+                _traveller.TravelDirection = Traveller.TravelWorldSpaceDirection.Right;
             }
             _traveller.Speed = _dodgeSpeed;
             yield return new WaitForSeconds(time);

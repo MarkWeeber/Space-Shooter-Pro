@@ -6,34 +6,44 @@ namespace SpaceShooterPro
     public class Traveller : MonoBehaviour
     {
         [Serializable]
-        public enum TravelSpaceDirection
+        public enum TravelWorldSpaceDirection
         {
-            Up = 0,
-            Down = 1,
+            Up_Forward = 0,
+            Down_Backward = 1,
             Left = 2,
             Right = 3
         }
-
-        [SerializeField] private bool _turnSelfUpTowardsDirection = false;
+        [SerializeField] private TravelWorldSpaceDirection _travelDirection = TravelWorldSpaceDirection.Down_Backward;
+        public TravelWorldSpaceDirection TravelDirection { get => _travelDirection; set { _travelDirection = value; SetUpVectors(); } }
+        [SerializeField] private Space _selectedSpace = Space.World;
         [SerializeField] private float _speed = 5f;
         public float Speed { get => _speed; set => _speed = value; }
         [SerializeField] private float _lifeTime = 5f;
         [SerializeField] private float _rotationSpeed = 0f;
         [SerializeField] private Vector3 _bounds = new Vector3(10f, 10f, 0f);
-        [SerializeField] private TravelSpaceDirection _travelDirection = TravelSpaceDirection.Down;
-        public TravelSpaceDirection TravelDirection { get => _travelDirection; set { _travelDirection = value; SetUpVectors(); } }
+
+        [Header("Complex Adjustment")]
         [SerializeField] private bool _enableComplexMovement = false;
         [SerializeField] private AnimationCurve _xCurveAdjustment;
         [SerializeField] private float _xCurveAmplitudeMultiplier = 2f;
         [SerializeField] private float _xCurveTimeMultiplier = 0.5f;
 
         private Vector3 _intialDirection = Vector3.zero;
-        private Vector3 _adjustedDirection = Vector3.zero;
+        private Vector3 _finalDirection = Vector3.zero;
         private float _randomValue;
 
         private void Start()
         {
+            _bounds = new Vector3(
+                    Mathf.Abs(_bounds.x),
+                    Mathf.Abs(_bounds.y),
+                    Mathf.Abs(_bounds.z)
+                    );
             SetUpVectors();
+            if (_enableComplexMovement)
+            {
+                _randomValue = UnityEngine.Random.Range(0f, 10f);
+            }
         }
 
         private void OnEnable()
@@ -55,41 +65,23 @@ namespace SpaceShooterPro
 
         private void SetUpVectors()
         {
-            _bounds = new Vector3(
-                    Mathf.Abs(_bounds.x),
-                    Mathf.Abs(_bounds.y),
-                    Mathf.Abs(_bounds.z)
-                    );
-            var relativeUpDirection = Vector3.zero;
             switch (_travelDirection)
             {
-                case TravelSpaceDirection.Up:
+                case TravelWorldSpaceDirection.Up_Forward:
                     _intialDirection = Vector2.up;
-                    relativeUpDirection = Vector3.up;
                     break;
-                case TravelSpaceDirection.Down:
+                case TravelWorldSpaceDirection.Down_Backward:
                     _intialDirection = Vector2.down;
-                    relativeUpDirection = Vector3.down;
                     break;
-                case TravelSpaceDirection.Left:
+                case TravelWorldSpaceDirection.Left:
                     _intialDirection = Vector2.left;
-                    relativeUpDirection = Vector3.left;
                     break;
-                case TravelSpaceDirection.Right:
+                case TravelWorldSpaceDirection.Right:
                     _intialDirection = Vector2.right;
-                    relativeUpDirection = Vector3.right;
                     break;
                 default:
                     _intialDirection = Vector2.up;
                     break;
-            }
-            if (_turnSelfUpTowardsDirection)
-            {
-                transform.up = relativeUpDirection;
-            }
-            if (_enableComplexMovement)
-            {
-                _randomValue = UnityEngine.Random.Range(0f, 10f);
             }
         }
 
@@ -97,7 +89,7 @@ namespace SpaceShooterPro
         {
             if (_enableComplexMovement)
             {
-                _adjustedDirection = new Vector3(
+                _finalDirection = new Vector3(
                         _intialDirection.x + _xCurveAdjustment.Evaluate((Time.time + _randomValue) * _xCurveTimeMultiplier % 1) * _xCurveAmplitudeMultiplier,
                         _intialDirection.y,
                         _intialDirection.z
@@ -105,11 +97,11 @@ namespace SpaceShooterPro
             }
             else
             {
-                _adjustedDirection = _intialDirection;
+                _finalDirection = _intialDirection;
             }
             if (_speed > 0)
             {
-                transform.Translate(_adjustedDirection * _speed * deltaTime, Space.World);
+                transform.Translate(_finalDirection * _speed * deltaTime, _selectedSpace);
             }
             if (_rotationSpeed > 0f)
             {

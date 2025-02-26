@@ -267,6 +267,14 @@ MonoBehaviour:
   _maxShieldValue: 50
   _shieldCurrenttValue: 25
   _protectiveShield: {fileID: 0}
+  _rammer: 0
+  _rammingSpeed: 25
+  _traveller: {fileID: 0}
+  _rammingTriggerCaller: {fileID: 0}
+  _backFirer: 0
+  _backShootingPortOffset: {x: 0, y: 0.5, z: 0}
+  _backViewShooterTriggerCaller: {fileID: 0}
+  _pickUpDestroyer: 0
   _dodger: 0
 --- !u!1 &1186457042348935572
 GameObject:

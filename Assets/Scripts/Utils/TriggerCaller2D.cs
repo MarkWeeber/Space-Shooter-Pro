@@ -8,12 +8,14 @@ namespace SpaceShooterPro
         [SerializeField] private string _targetTag = "";
         [SerializeField] private bool _runOnlyOnce = true;
         [SerializeField] private Collider2D _collider2D;
-        public Action<Collider2D> OnTriggerEnter2DEvent; 
+        public Action<Collider2D> OnTriggerEnterWithColliderData;
+        public Action OnTriggerEneterEvent;
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag(_targetTag))
             {
-                OnTriggerEnter2DEvent?.Invoke(collision);
+                OnTriggerEnterWithColliderData?.Invoke(collision);
+                OnTriggerEneterEvent?.Invoke();
                 if (_runOnlyOnce)
                 {
                     _collider2D.enabled = false;

@@ -1638,7 +1638,7 @@ MonoBehaviour:
     MaxSpawnCount: 1
   _enemyWavesSpawn:
   - EnemiesSpawnSetup:
-    - Prefab: {fileID: 317294542391734023, guid: 55c6906dc5f084d479b248b32122b7c1,
+    - Prefab: {fileID: 7778445778986327783, guid: 9365f56b2b62f564a93d7fe6e9a86a9f,
         type: 3}
       MinSpawnRate: 1
       MaxSpawnRate: 3
@@ -3662,11 +3662,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 254873713143940507, guid: d8572b1a1ff51784381590374b79e36d,
-        type: 3}
-      propertyPath: _projectileRoot
-      value: 
-      objectReference: {fileID: 716618562}
     - target: {fileID: 254873713143940508, guid: d8572b1a1ff51784381590374b79e36d,
         type: 3}
       propertyPath: m_Name
@@ -3677,11 +3672,6 @@ PrefabInstance:
       propertyPath: _projectileRoot
       value: 
       objectReference: {fileID: 716618562}
-    - target: {fileID: 790444118162796824, guid: d8572b1a1ff51784381590374b79e36d,
-        type: 3}
-      propertyPath: _protectiveShield
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8572b1a1ff51784381590374b79e36d, type: 3}
 --- !u!1001 &7170849533919424726

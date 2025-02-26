@@ -10,7 +10,9 @@ public class GlobalVariables
     public const KeyCode RESTART_KEYCODE = KeyCode.R;
     public const KeyCode ESCAPE_KEYCODE = KeyCode.Escape;
     public const KeyCode SPRINT_KEYCODE = KeyCode.LeftShift;
+    public const KeyCode COLLECT_KEYCODE = KeyCode.C;
     public const string PLAYER_TAG = "Player";
     public const string ENEMY_TAG = "Enemy";
+    public const string PICKUP_TAG = "PickUp";
     public const string OUT_OF_BOUNDS_TAG = "OutOfBounds";
 }

@@ -16,10 +16,12 @@ namespace SpaceShooterPro
 
         [SerializeField] private bool _turnSelfUpTowardsDirection = false;
         [SerializeField] private float _speed = 5f;
+        public float Speed { get => _speed; set => _speed = value; }
         [SerializeField] private float _lifeTime = 5f;
         [SerializeField] private float _rotationSpeed = 0f;
         [SerializeField] private Vector3 _bounds = new Vector3(10f, 10f, 0f);
         [SerializeField] private TravelSpaceDirection _travelDirection = TravelSpaceDirection.Down;
+        public TravelSpaceDirection TravelDirection { get => _travelDirection; set { _travelDirection = value; SetUpVectors(); } }
         [SerializeField] private bool _enableComplexMovement = false;
         [SerializeField] private AnimationCurve _xCurveAdjustment;
         [SerializeField] private float _xCurveAmplitudeMultiplier = 2f;

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1479936444492055381}
   m_Layer: 0
   m_Name: Projectile
-  m_TagString: Untagged
+  m_TagString: PlayerProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,11 +144,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79c74c82afacfcb4aa8a7af804f45fb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _turnSelfUpTowardsDirection: 0
   _speed: 15
   _lifeTime: 5
   _rotationSpeed: 0
   _bounds: {x: 10, y: 15, z: 0}
   _travelDirection: 0
+  _enableComplexMovement: 0
+  _xCurveAdjustment:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _xCurveAmplitudeMultiplier: 2
+  _xCurveTimeMultiplier: 0.5
 --- !u!114 &1479936444492055381
 MonoBehaviour:
   m_ObjectHideFlags: 0

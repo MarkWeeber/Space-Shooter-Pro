@@ -28,15 +28,19 @@ namespace SpaceShooterPro
         [SerializeField] private Health _health;
         [SerializeField] private ProtectiveShield _protectiveShield;
         [SerializeField] private Transform[] _damageEffects;
+        [Header("Player Collecting")]
+        [SerializeField] private float _attractionSpeed = 1f;
+        [SerializeField] private float _attractionRadius = 4f;
 
         #region service variables
         private float _horizontalInput, _verticalInput, _sprintAmmount, _sprintFactor, _speedBoostFactor, _maxX, _maxY, _minX, _minY;
         private bool _fireAllowed, _sprintReady, _powerfulProjectileAllowed;
-        private Vector3 _movementVector, _currentPosition, _spawnPosition;
+        private Vector3 _movementVector, _currentPosition, _spawnPosition, _directionToPlayer;
         private SimpleRateLimiter _sprintReteLimiter, _fireRateLimiter;
         private GameObject _projectile;
         private DamageDealer _damageDealer;
         private IEnumerator _trippleProjectileCoroutine, _speedCoroutine, _powerfullProjectileCoroutine;
+        private RaycastHit2D[] _attractedPickupsHits;
         #endregion
 
         #region init
@@ -129,6 +133,12 @@ namespace SpaceShooterPro
             {
                 Fire();
                 _fireRateLimiter.SetNewRate(Time.time, _fireRate);
+            }
+
+            // collecting pickups
+            if (Input.GetKey(GlobalVariables.COLLECT_KEYCODE))
+            {
+                AttractPickUps();
             }
         }
 
@@ -229,6 +239,17 @@ namespace SpaceShooterPro
             StopCoroutine(_speedCoroutine);
             _speedCoroutine = CooldownSpeedBoostRoutine(timeInSeconds);
             StartCoroutine(_speedCoroutine);
+        }
+
+        private void AttractPickUps()
+        {
+            _attractedPickupsHits = Physics2D.CircleCastAll(transform.position, _attractionRadius, Vector2.zero);
+            foreach (var hit in _attractedPickupsHits)
+            {
+                _directionToPlayer = transform.position - hit.transform.position;
+                _directionToPlayer.Normalize();
+                hit.transform.position += _directionToPlayer * _attractionSpeed * Time.deltaTime;
+            }
         }
 
         #endregion

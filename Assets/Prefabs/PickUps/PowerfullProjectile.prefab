@@ -195,9 +195,10 @@ GameObject:
   - component: {fileID: 5653041705660985218}
   - component: {fileID: 5653041705660985216}
   - component: {fileID: 5446711213948200227}
+  - component: {fileID: 7094631054903216927}
   m_Layer: 0
   m_Name: PowerfullProjectile
-  m_TagString: Untagged
+  m_TagString: PickUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -267,11 +268,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79c74c82afacfcb4aa8a7af804f45fb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _turnSelfUpTowardsDirection: 0
   _speed: 2
   _lifeTime: 10
   _rotationSpeed: 0
   _bounds: {x: 10, y: 15, z: 0}
   _travelDirection: 1
+  _enableComplexMovement: 0
+  _xCurveAdjustment:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _xCurveAmplitudeMultiplier: 2
+  _xCurveTimeMultiplier: 0.5
 --- !u!114 &5446711213948200227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,3 +296,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _duration: 5
+--- !u!114 &7094631054903216927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5653041705660985220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01c392fe2de6e1547ad2438f52276e55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startHealth: 10
+  _currentHealth: 10
+  _destroyOnDeath: 1
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []

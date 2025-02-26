@@ -15,12 +15,12 @@ namespace SpaceShooterPro
 
         private void Start()
         {
-            _triggerCaller2D.OnTriggerEnter2DEvent += OnTargetFound;
+            _triggerCaller2D.OnTriggerEnterWithColliderData += OnTargetFound;
         }
 
         private void OnDestroy()
         {
-            _triggerCaller2D.OnTriggerEnter2DEvent -= OnTargetFound;
+            _triggerCaller2D.OnTriggerEnterWithColliderData -= OnTargetFound;
         }
 
         private void Update()

@@ -8,6 +8,7 @@ namespace SpaceShooterPro
     {
         [SerializeField] private float _startHealth = 100f;
         [SerializeField] private float _currentHealth = 100f;
+        [SerializeField] private bool _destroyOnDeath = false;
         private ProtectiveShield _protectiveShield;
         public ProtectiveShield ProtectiveShield { get => _protectiveShield; set => _protectiveShield = value; }
         private float _shieldExessDamage;
@@ -26,6 +27,10 @@ namespace SpaceShooterPro
                 if (_currentHealth < 0f)
                 {
                     OnDeath?.Invoke(); // death event
+                    if (_destroyOnDeath) // needs to be a separate bool since Player and Enemy classes call Destroy themselves
+                    {
+                        Destroy(gameObject);
+                    }
                 }
                 HealthUpdated?.Invoke(_startHealth, _currentHealth);
                 TookDamage?.Invoke();

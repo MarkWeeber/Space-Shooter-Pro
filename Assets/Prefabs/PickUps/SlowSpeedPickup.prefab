@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 8742318005591097698}
   - component: {fileID: 8742318005591097697}
   - component: {fileID: 8742318005591097710}
+  - component: {fileID: 2393871749346514993}
   m_Layer: 0
   m_Name: SlowSpeedPickup
-  m_TagString: Untagged
+  m_TagString: PickUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,6 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79c74c82afacfcb4aa8a7af804f45fb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _turnSelfUpTowardsDirection: 0
   _speed: 5
   _lifeTime: 5
   _rotationSpeed: 0
@@ -162,3 +164,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boostDuration: 5
   _boostFactor: 0.5
+--- !u!114 &2393871749346514993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8742318005591097696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01c392fe2de6e1547ad2438f52276e55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startHealth: 10
+  _currentHealth: 10
+  _destroyOnDeath: 1
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []

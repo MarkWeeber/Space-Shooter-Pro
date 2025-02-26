@@ -461,6 +461,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startHealth: 100
   _currentHealth: 100
+  _destroyOnDeath: 0
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -494,6 +495,8 @@ MonoBehaviour:
     type: 3}
   _powerfullProjectile: {fileID: 1947409605973168717, guid: 3c2caf2bf1f2f594f99cc5ee6e57c5d7,
     type: 3}
+  _homingProjectile: {fileID: 4449737073412295512, guid: ac125ce7d0771ca41a32b7d4d223a8fa,
+    type: 3}
   _projectileRoot: {fileID: 0}
   _health: {fileID: 4078359851823558765}
   _protectiveShield: {fileID: 2066489254837278775}
@@ -504,6 +507,8 @@ MonoBehaviour:
   - {fileID: 254873714404868685}
   - {fileID: 254873713684223563}
   - {fileID: 254873712985024502}
+  _attractionSpeed: 1
+  _attractionRadius: 4
 --- !u!114 &2066489254837278775
 MonoBehaviour:
   m_ObjectHideFlags: 0

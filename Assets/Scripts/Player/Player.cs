@@ -22,6 +22,7 @@ namespace SpaceShooterPro
         [SerializeField] private Transform[] _firePorts = new Transform[0];
         [SerializeField] private GameObject _projectilePrefab;
         [SerializeField] private GameObject _powerfullProjectile;
+        [SerializeField] private GameObject _homingProjectile;
         [SerializeField] private Transform _projectileRoot;
 
         [Header("Player Health")]
@@ -34,12 +35,12 @@ namespace SpaceShooterPro
 
         #region service variables
         private float _horizontalInput, _verticalInput, _sprintAmmount, _sprintFactor, _speedBoostFactor, _maxX, _maxY, _minX, _minY;
-        private bool _fireAllowed, _sprintReady, _powerfulProjectileAllowed;
+        private bool _fireAllowed, _sprintReady, _powerfulProjectileAllowed, _homingProjectileAllowed;
         private Vector3 _movementVector, _currentPosition, _spawnPosition, _directionToPlayer;
         private SimpleRateLimiter _sprintReteLimiter, _fireRateLimiter;
         private GameObject _projectile;
         private DamageDealer _damageDealer;
-        private IEnumerator _trippleProjectileCoroutine, _speedCoroutine, _powerfullProjectileCoroutine;
+        private IEnumerator _trippleProjectileCoroutine, _speedCoroutine, _powerfullProjectileCoroutine, _hommingProjectileRoutine;
         private RaycastHit2D[] _attractedPickupsHits;
         #endregion
 
@@ -171,6 +172,10 @@ namespace SpaceShooterPro
                 {
                     SendProjectile(_powerfullProjectile);
                 }
+                else if (_homingProjectileAllowed && _homingProjectile != null)
+                {
+                    SendProjectile(_homingProjectile);
+                }
                 else if (_projectilePrefab != null)
                 {
                     SendProjectile(_projectilePrefab);
@@ -239,6 +244,14 @@ namespace SpaceShooterPro
             StopCoroutine(_speedCoroutine);
             _speedCoroutine = CooldownSpeedBoostRoutine(timeInSeconds);
             StartCoroutine(_speedCoroutine);
+        }
+
+        public void EnableHommingProjectile(float timeInSeconds)
+        {
+            _homingProjectileAllowed = true;
+            StopCoroutine(_hommingProjectileRoutine);
+            _hommingProjectileRoutine = HommingProjectileRoutine(timeInSeconds);
+            StartCoroutine(_hommingProjectileRoutine);
         }
 
         private void AttractPickUps()
@@ -314,9 +327,10 @@ namespace SpaceShooterPro
         #region coroutines
         private void InitializeCoroutines()
         {
-            _trippleProjectileCoroutine = CooldownTrippleProjectileAbilityRoutine(0);
-            _speedCoroutine = CooldownSpeedBoostRoutine(0);
-            _powerfullProjectileCoroutine = PowerfullProjectileRoutine(0);
+            _trippleProjectileCoroutine = CooldownTrippleProjectileAbilityRoutine(0f);
+            _speedCoroutine = CooldownSpeedBoostRoutine(0f);
+            _powerfullProjectileCoroutine = PowerfullProjectileRoutine(0f);
+            _hommingProjectileRoutine = HommingProjectileRoutine(0f);
         }
 
         IEnumerator CooldownTrippleProjectileAbilityRoutine(float time)
@@ -339,6 +353,12 @@ namespace SpaceShooterPro
         {
             yield return new WaitForSeconds(time);
             _powerfulProjectileAllowed = false;
+        }
+
+        IEnumerator HommingProjectileRoutine(float time)
+        {
+            yield return new WaitForSeconds(time);
+            _homingProjectileAllowed = false;
         }
 
         #endregion

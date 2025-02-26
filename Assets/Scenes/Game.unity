@@ -1636,9 +1636,15 @@ MonoBehaviour:
     MaxSpawnRate: 5
     MinSpawnCount: 0
     MaxSpawnCount: 1
+  - Prefab: {fileID: 5619391850207859126, guid: bdd1557722324d34da36f57352ba7c22,
+      type: 3}
+    MinSpawnRate: 5
+    MaxSpawnRate: 5
+    MinSpawnCount: 1
+    MaxSpawnCount: 1
   _enemyWavesSpawn:
   - EnemiesSpawnSetup:
-    - Prefab: {fileID: 7778445778986327783, guid: 9365f56b2b62f564a93d7fe6e9a86a9f,
+    - Prefab: {fileID: 317294542391734023, guid: 55c6906dc5f084d479b248b32122b7c1,
         type: 3}
       MinSpawnRate: 1
       MaxSpawnRate: 3

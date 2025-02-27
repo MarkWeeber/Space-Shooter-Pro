@@ -18,6 +18,7 @@ namespace SpaceShooterPro
             {
                 if (Input.GetKeyDown(GlobalVariables.RESTART_KEYCODE))
                 {
+                    _gameIsOver = false;
                     RestartCurrentScene();
                 }
             }

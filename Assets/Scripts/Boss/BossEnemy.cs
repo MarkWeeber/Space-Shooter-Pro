@@ -6,26 +6,19 @@ namespace SpaceShooterPro
     public class BossEnemy : MonoBehaviour
     {
         [Header("Basic")]
-        [SerializeField] private float _startingHealth = 1000f;
         [SerializeField] private Health _health;
+        [SerializeField] protected Transform _remainsAfterDestroy;
         [Header("Movement")]
         [SerializeField] private float _minMoveSpeed = 4f;
         [SerializeField] private float _maxMoveSpeed = 6f;
-        [SerializeField] private Vector2[] _waypoints;
+        [SerializeField] private Vector3[] _waypoints;
         [SerializeField] private float _minDistanceTillWaypoint = 0.05f;
-        [Header("Firing")]
-        [SerializeField] private float _simpleFireRate = 0.4f;
-        [SerializeField] private GameObject _simpleProjectile;
-        [SerializeField] private GameObject _homingProjectile;
-        [SerializeField] private float _minHommingFireRate = 2f;
-        [SerializeField] private float _maxHommingFireRate = 4f;
 
         #region service variables
-        private Vector2 _currentDestination;
-        private Vector2 _currentMovementDirection;
+        private Vector3 _currentDestination;
+        private Vector3 _currentMovementDirection;
         private float _distanceToDestination;
         private float _movementSpeed;
-        private IEnumerator _movementCoroutine;
         #endregion
 
         #region init
@@ -36,9 +29,16 @@ namespace SpaceShooterPro
             {
                 SetNewDestination();
             }
+            AssignToEvents();
+            UIManager.Instance.BossSpawned();
         }
 
         #endregion
+
+        private void OnDestroy()
+        {
+            RemoveEventAssignments();
+        }
 
         #region movement
         private void Update()
@@ -51,16 +51,16 @@ namespace SpaceShooterPro
 
         private void ManageMovement()
         {
-            _distanceToDestination = Vector2.Distance(_currentDestination, transform.position);
+            _distanceToDestination = Vector3.Distance(_currentDestination, transform.position);
             if (_distanceToDestination < _minDistanceTillWaypoint)
             {
                 SetNewDestination();
             }
             else
             {
-                _currentMovementDirection = (Vector2)transform.position - _currentDestination;
+                _currentMovementDirection = _currentDestination - transform.position;
                 _currentMovementDirection.Normalize();
-                transform.Translate(_currentMovementDirection * _movementSpeed * Time.deltaTime);
+                transform.position += _currentMovementDirection * _movementSpeed * Time.deltaTime;
             }
         }
 
@@ -70,9 +70,42 @@ namespace SpaceShooterPro
             _movementSpeed = Random.Range(_minMoveSpeed, _maxMoveSpeed);
         }
 
+        private void LeaveRemainsAfterDestroy()
+        {
+            if (_remainsAfterDestroy != null)
+            {
+                _remainsAfterDestroy.gameObject.SetActive(true);
+                _remainsAfterDestroy.parent = null;
+            }
+        }
+
         #endregion
 
         #region events
+
+        private void AssignToEvents()
+        {
+            _health.OnDeath.AddListener(OnDeath);
+            _health.HealthUpdated += HealthUpdated;
+        }
+
+        private void RemoveEventAssignments()
+        {
+            _health.HealthUpdated -= HealthUpdated;
+        }
+
+        private void OnDeath()
+        {
+            UIManager.Instance.BossDefeated();
+            LeaveRemainsAfterDestroy();
+            Destroy(gameObject);
+        }
+
+        private void HealthUpdated(float startHealth, float currentHealth)
+        {
+            UIManager.Instance.UpdateBossHealth(startHealth, currentHealth);
+        }
+
 
         #endregion
 

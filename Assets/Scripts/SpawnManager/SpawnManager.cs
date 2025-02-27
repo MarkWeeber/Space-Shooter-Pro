@@ -41,6 +41,7 @@ namespace SpaceShooterPro
         [SerializeField] private Vector3 _spawnRange = new Vector3(5f, 0f, 0f);
         [SerializeField] private SpawningObject[] _spawnObjects;
         [SerializeField] private EnemyWaveSpawn[] _enemyWavesSpawn;
+        [SerializeField] private GameObject _bossEnemyPrefab;
         [SerializeField] private float _startDelay = 4f;
 
         private IEnumerator _stageSwitchRoutine;
@@ -148,7 +149,7 @@ namespace SpaceShooterPro
 
         }
 
-        private void SpawnPrefab(GameObject prefab)
+        private void SpawnPrefab(GameObject prefab, bool usePrefabsRotation = false)
         {
             if (prefab != null)
             {
@@ -158,7 +159,12 @@ namespace SpaceShooterPro
                     Random.Range(-_spawnRange.z, _spawnRange.z)
                 );
                 _spawnPosition += transform.position;
-                Instantiate(prefab, _spawnPosition, Quaternion.identity, this.transform);
+                var rotation = Quaternion.identity;
+                if (usePrefabsRotation)
+                {
+                    rotation = prefab.transform.rotation;
+                }
+                Instantiate(prefab, _spawnPosition, rotation, this.transform);
             }
         }
 
@@ -212,7 +218,7 @@ namespace SpaceShooterPro
                     break;
                 case WaveStage.WaveStarted:
                     _currentWaveStageIndex = WaveStage.NormalWaveStarted;
-                    
+
                     break;
                 case WaveStage.NormalWaveStarted:
                     _currentWaveStageIndex = WaveStage.OutBreakStarted;
@@ -232,11 +238,17 @@ namespace SpaceShooterPro
                     else // it was the last wave
                     {
                         _spawnWaveEnabled = false;
+                        WaveSpawnEndReached();
                     }
                     break;
                 default:
                     break;
             }
+        }
+
+        private void WaveSpawnEndReached()
+        {
+            SpawnPrefab(_bossEnemyPrefab, usePrefabsRotation: true);
         }
 
     }

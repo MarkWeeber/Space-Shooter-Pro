@@ -12,6 +12,7 @@ namespace SpaceShooterPro
         [SerializeField] private TMP_Text _ammoValueText;
         [SerializeField] private TMP_Text _announceText;
         [SerializeField] private float _announcementDuration = 3f;
+        [SerializeField] private float _winAnnouncementDuration = 10f;
         [SerializeField] private Image _healthBarHorizontalFillImage;
         [SerializeField] private Color _fullHealthBarColor = Color.green;
         [SerializeField] private Color _emptyHealthBarColor = Color.red;
@@ -21,12 +22,15 @@ namespace SpaceShooterPro
         [SerializeField] private Image _sprintBarImage;
         [SerializeField] private float _cameraShakeIntensity = 0.05f;
         [SerializeField] private float _cameraShakeDuration = 0.4f;
+        [SerializeField] private Transform _bossHealthPanel;
+        [SerializeField] private Image _bossHealthBarHorizontalFillImage;
+        [SerializeField] private Image[] _bossHealthBarImages;
 
         public UnityEvent OnGameOver;
         private IEnumerator _sprintBarCoolDownRoutine, _cameraShakeRoutine, _announcementRoutine;
-        private Color _healthBarColor;
+        private Color _healthBarColor, _bossHealthBarColor;
         private Color _sprintBarFullColor;
-        private float _healthBarFillRatio, _sprintBarFillRatio;
+        private float _healthBarFillRatio, _sprintBarFillRatio, _bossHealthBarFillRatio;
         private int _scoreValue;
         private Vector3 _cameraOriginalPosition;
 
@@ -52,6 +56,23 @@ namespace SpaceShooterPro
                     foreach (var image in _healthBarImages)
                     {
                         image.color = _healthBarColor;
+                    }
+                }
+            }
+        }
+
+        public void UpdateBossHealth(float startingHealth, float currentHealth)
+        {
+            if (_bossHealthBarHorizontalFillImage != null)
+            {
+                _bossHealthBarFillRatio = currentHealth / startingHealth;
+                _bossHealthBarHorizontalFillImage.fillAmount = _bossHealthBarFillRatio;
+                if (_bossHealthBarImages != null)
+                {
+                    _bossHealthBarColor = Color.Lerp(_emptyHealthBarColor, _fullHealthBarColor, _bossHealthBarFillRatio);
+                    foreach (var image in _bossHealthBarImages)
+                    {
+                        image.color = _bossHealthBarColor;
                     }
                 }
             }
@@ -93,15 +114,32 @@ namespace SpaceShooterPro
 
         public void MakeAnnouncement(string text)
         {
+            Announce(text, _announcementDuration);
+        }
+
+        private void Announce(string text, float duration)
+        {
             StopCoroutine(_announcementRoutine);
             _announceText.text = "";
-            _announcementRoutine = DisplayAnnounceText(text, _announcementDuration);
+            _announcementRoutine = DisplayAnnounceText(text, duration);
             StartCoroutine(_announcementRoutine);
         }
 
         public void SetGameOver()
         {
             OnGameOver?.Invoke();
+        }
+
+        public void BossSpawned()
+        {
+            _bossHealthPanel.gameObject.SetActive(true);
+        }
+
+        public void BossDefeated()
+        {
+            _bossHealthPanel.gameObject.SetActive(false);
+            Announce("CONGRATULATIONS, YOU DEFEATED THE BOSS!", _winAnnouncementDuration);
+
         }
 
         IEnumerator SprintBarCooldownRoutine(float timeInSeconds, int steps)

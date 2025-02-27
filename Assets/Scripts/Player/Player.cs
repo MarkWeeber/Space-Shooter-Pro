@@ -16,7 +16,7 @@ namespace SpaceShooterPro
 
         [Header("Player shooting")]
         [SerializeField] private int _ammoCount = 15;
-        public int AmmoCount { get => _ammoCount; set { _ammoCount = value; UpdateAmmoUI();} }
+        public int AmmoCount { get => _ammoCount; set { _ammoCount = value; UpdateAmmoUI(); } }
         [SerializeField] private float _fireRate = 0.2f;
         [SerializeField] private float _damage = 25;
         [SerializeField] private Transform[] _firePorts = new Transform[0];
@@ -259,9 +259,12 @@ namespace SpaceShooterPro
             _attractedPickupsHits = Physics2D.CircleCastAll(transform.position, _attractionRadius, Vector2.zero);
             foreach (var hit in _attractedPickupsHits)
             {
-                _directionToPlayer = transform.position - hit.transform.position;
-                _directionToPlayer.Normalize();
-                hit.transform.position += _directionToPlayer * _attractionSpeed * Time.deltaTime;
+                if (hit.collider.CompareTag(GlobalVariables.PICKUP_TAG))
+                {
+                    _directionToPlayer = transform.position - hit.transform.position;
+                    _directionToPlayer.Normalize();
+                    hit.transform.position += _directionToPlayer * _attractionSpeed * Time.deltaTime;
+                }
             }
         }
 

@@ -25,6 +25,7 @@ namespace SpaceShooterPro
         [SerializeField] private Transform _bossHealthPanel;
         [SerializeField] private Image _bossHealthBarHorizontalFillImage;
         [SerializeField] private Image[] _bossHealthBarImages;
+        [SerializeField] private Transform _infoPanel;
 
         public UnityEvent OnGameOver;
         private IEnumerator _sprintBarCoolDownRoutine, _cameraShakeRoutine, _announcementRoutine;
@@ -139,7 +140,16 @@ namespace SpaceShooterPro
         {
             _bossHealthPanel.gameObject.SetActive(false);
             Announce("CONGRATULATIONS, YOU DEFEATED THE BOSS!", _winAnnouncementDuration);
+        }
 
+        public void ShowInfoPanel()
+        {
+            _infoPanel.gameObject.SetActive(true);
+        }
+
+        public void HideInfoPanel()
+        {
+            _infoPanel.gameObject.SetActive(false);
         }
 
         IEnumerator SprintBarCooldownRoutine(float timeInSeconds, int steps)

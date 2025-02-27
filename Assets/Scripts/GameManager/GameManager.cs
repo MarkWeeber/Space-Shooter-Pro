@@ -6,10 +6,11 @@ namespace SpaceShooterPro
     public class GameManager : SingletonBehaviour<GameManager>
     {
         private bool _gameIsOver;
-        protected override void Awake()
+        private bool _gamePaused;
+
+        private void Start()
         {
-            dontDestroyOnload = true;
-            base.Awake();
+            _gamePaused = true;
         }
 
         private void Update()
@@ -20,6 +21,20 @@ namespace SpaceShooterPro
                 {
                     _gameIsOver = false;
                     RestartCurrentScene();
+                }
+            }
+            if (_gamePaused)
+            {
+                if (Input.GetKeyDown(GlobalVariables.JUMP_KEYCODE) || Input.GetKeyDown(GlobalVariables.Q_KEYCODE))
+                {
+                    TogglePauseTheGame();
+                }
+            }
+            else
+            {
+                if (Input.GetKeyDown(GlobalVariables.Q_KEYCODE))
+                {
+                    TogglePauseTheGame();
                 }
             }
             if (Input.GetKeyDown(GlobalVariables.ESCAPE_KEYCODE))
@@ -46,6 +61,21 @@ namespace SpaceShooterPro
         public void SetGameOver()
         {
             _gameIsOver = true;
+        }
+
+        public void TogglePauseTheGame()
+        {
+            if (_gamePaused)
+            {
+                Time.timeScale = 1f;
+                UIManager.Instance.HideInfoPanel();
+            }
+            else
+            {
+                Time.timeScale = 0f;
+                UIManager.Instance.ShowInfoPanel();
+            }
+            _gamePaused = !_gamePaused;
         }
     }
 }

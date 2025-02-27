@@ -7,6 +7,7 @@ public class GlobalVariables
     public const string PLAYER_OBJECT_NAME = "Player";
     public const string HORIZONTAL_AXIS = "Horizontal";
     public const string VERTICAL_AXIS = "Vertical";
+    public const KeyCode Q_KEYCODE = KeyCode.Q;
     public const KeyCode JUMP_KEYCODE = KeyCode.Space;
     public const KeyCode RESTART_KEYCODE = KeyCode.R;
     public const KeyCode ESCAPE_KEYCODE = KeyCode.Escape;
